@@ -25,8 +25,10 @@ public class Questionary {
   @Column(nullable = false)
   private LocalDateTime createdAt;
 
-  @OneToOne(mappedBy = "questionary", cascade = CascadeType.ALL)
-  private QuestionaryOptions questionaryOptions;
+  private LocalDateTime startDate;
+  private LocalDateTime endDate;
+  private Integer answersLimit;
+  private Boolean anonymous;
 
   @OneToMany(mappedBy = "questionary", cascade = CascadeType.ALL)
   private Set<Question> questions;
