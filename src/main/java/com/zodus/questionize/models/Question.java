@@ -2,9 +2,7 @@ package com.zodus.questionize.models;
 
 import com.zodus.questionize.enums.QuestionType;
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Set;
 import java.util.UUID;
@@ -14,6 +12,8 @@ import java.util.UUID;
 @Builder
 @Entity
 @Table(name = "question")
+@AllArgsConstructor
+@NoArgsConstructor
 public class Question {
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)

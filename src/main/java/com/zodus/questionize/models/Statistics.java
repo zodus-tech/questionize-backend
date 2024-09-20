@@ -1,9 +1,7 @@
 package com.zodus.questionize.models;
 
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Set;
 import java.util.UUID;
@@ -13,6 +11,8 @@ import java.util.UUID;
 @Builder
 @Entity
 @Table(name = "statistics")
+@AllArgsConstructor
+@NoArgsConstructor
 public class Statistics {
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
