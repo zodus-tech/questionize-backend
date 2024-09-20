@@ -1,6 +1,7 @@
 package com.zodus.questionize.models;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,6 +11,7 @@ import java.util.UUID;
 
 @Getter
 @Setter
+@Builder
 @Entity
 @Table(name = "questionary")
 public class Questionary {
@@ -17,12 +19,15 @@ public class Questionary {
   @GeneratedValue(strategy = GenerationType.UUID)
   private UUID id;
 
+  @Column(nullable = false)
   private String title;
+
+  @Column(nullable = false)
   private LocalDateTime createdAt;
 
-  @OneToOne(mappedBy = "questionary")
+  @OneToOne(mappedBy = "questionary", cascade = CascadeType.ALL)
   private QuestionaryOptions questionaryOptions;
 
-  @OneToMany(mappedBy = "questionary")
+  @OneToMany(mappedBy = "questionary", cascade = CascadeType.ALL)
   private Set<Question> questions;
 }

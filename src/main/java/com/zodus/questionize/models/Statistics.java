@@ -1,6 +1,7 @@
 package com.zodus.questionize.models;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,6 +10,7 @@ import java.util.UUID;
 
 @Getter
 @Setter
+@Builder
 @Entity
 @Table(name = "statistics")
 public class Statistics {
@@ -19,9 +21,9 @@ public class Statistics {
   private Integer totalAnswers;
 
   @OneToOne
-  @JoinColumn(name = "questionId")
+  @JoinColumn(name = "questionId", nullable = false)
   private Question question;
 
-  @OneToMany(mappedBy = "statistics")
+  @OneToMany(mappedBy = "statistics", cascade = CascadeType.ALL)
   private Set<AnswerOccurrence> answerOccurrences;
 }
