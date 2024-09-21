@@ -5,6 +5,8 @@ import com.zodus.questionize.models.Question;
 import com.zodus.questionize.models.Questionary;
 import com.zodus.questionize.repositories.QuestionaryRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -43,5 +45,9 @@ public class QuestionaryService {
 
   public Questionary getQuestionaryById(UUID id) throws ResponseStatusException {
     return questionaryRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+  }
+
+  public Page<Questionary> getAllQuestionaries(Pageable pageable) {
+    return questionaryRepository.findAll(pageable);
   }
 }

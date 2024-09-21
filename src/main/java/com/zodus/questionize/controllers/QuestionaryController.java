@@ -7,11 +7,14 @@ import com.zodus.questionize.models.Questionary;
 import com.zodus.questionize.services.QuestionaryService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -23,21 +26,28 @@ public class QuestionaryController {
   @PostMapping("/create")
   public ResponseEntity<QuestionaryDTO> createQuestionary(@RequestBody CreateQuestionaryRequest request) {
     Questionary questionary = questionaryService.createQuestionary(request);
-    QuestionaryDTO questionaryDTO = QuestionaryDTOFactory.create(questionary);
 
-    return new ResponseEntity<>(questionaryDTO, HttpStatus.CREATED);
+    QuestionaryDTO response = QuestionaryDTOFactory.create(questionary);
+    return new ResponseEntity<>(response, HttpStatus.CREATED);
   }
 
   @GetMapping("/{id}")
   public ResponseEntity<QuestionaryDTO> getQuestionaryById(@PathVariable UUID id) {
     Questionary questionary = questionaryService.getQuestionaryById(id);
-    QuestionaryDTO questionaryDTO = QuestionaryDTOFactory.create(questionary);
 
-    return new ResponseEntity<>(questionaryDTO, HttpStatus.OK);
+    QuestionaryDTO response = QuestionaryDTOFactory.create(questionary);
+    return new ResponseEntity<>(response, HttpStatus.OK);
   }
 
   @GetMapping("/all")
-  public ResponseEntity<Page<QuestionaryDTO>> getQuestionaries(Pageable pageable) {
-    return null;
+  public ResponseEntity<PagedModel<QuestionaryDTO>> getQuestionaries(Pageable pageable) {
+    Page<Questionary> questionaryPage = questionaryService.getAllQuestionaries(pageable);
+    List<QuestionaryDTO> questionaryDTOS = questionaryPage.getContent().stream().map(
+        QuestionaryDTOFactory::create
+    ).toList();
+    Page<QuestionaryDTO> questionaryDTOPage = new PageImpl<>(questionaryDTOS, pageable, questionaryPage.getTotalElements());
+
+    PagedModel<QuestionaryDTO> response = new PagedModel<>(questionaryDTOPage);
+    return new ResponseEntity<>(response, HttpStatus.OK);
   }
 }
