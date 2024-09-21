@@ -50,4 +50,11 @@ public class QuestionaryService {
   public Page<Questionary> getAllQuestionaries(Pageable pageable) {
     return questionaryRepository.findAll(pageable);
   }
+
+  public boolean deleteQuestionaryById(UUID id) throws ResponseStatusException {
+    questionaryRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+    questionaryRepository.deleteById(id);
+    return questionaryRepository.findById(id).isEmpty();
+  }
 }

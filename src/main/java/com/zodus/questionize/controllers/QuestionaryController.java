@@ -50,4 +50,11 @@ public class QuestionaryController {
     PagedModel<QuestionaryDTO> response = new PagedModel<>(questionaryDTOPage);
     return new ResponseEntity<>(response, HttpStatus.OK);
   }
+
+  @DeleteMapping("/delete/{id}")
+  public ResponseEntity<Boolean> deleteQuestionary(@PathVariable UUID id) {
+    boolean successfullyDeleted = questionaryService.deleteQuestionaryById(id);
+
+    return new ResponseEntity<>(successfullyDeleted, HttpStatus.OK);
+  }
 }
