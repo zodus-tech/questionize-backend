@@ -27,7 +27,6 @@ public class QuestionaryService {
         .startDate(request.options().startDate())
         .endDate(request.options().endDate())
         .answersLimit(request.options().answersLimit())
-        .anonymous(request.options().anonymous())
         .build();
 
     Set<Question> questions = request.questions().stream().map(

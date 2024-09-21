@@ -24,9 +24,6 @@ public class Answer {
   @Column(nullable = false)
   private LocalDateTime answeredAt;
 
-  @Column(nullable = false)
-  private String issuedBy;
-
   @ManyToOne
   @JoinColumn(name = "questionId", nullable = false)
   private Question question;

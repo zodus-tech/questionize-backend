@@ -28,8 +28,15 @@ public class Questionary {
   private LocalDateTime startDate;
   private LocalDateTime endDate;
   private Integer answersLimit;
-  private Boolean anonymous;
 
   @OneToMany(mappedBy = "questionary", cascade = CascadeType.ALL)
   private Set<Question> questions;
+
+  @OneToOne
+  @JoinColumn(name = "imageId")
+  private Image banner;
+
+  @ManyToOne
+  @JoinColumn(name = "departmentId")
+  private Department department;
 }

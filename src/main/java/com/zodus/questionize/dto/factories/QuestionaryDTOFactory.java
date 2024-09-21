@@ -21,8 +21,7 @@ public class QuestionaryDTOFactory {
     QuestionaryOptionsDTO questionaryOptionsDTO = new QuestionaryOptionsDTO(
         questionary.getStartDate(),
         questionary.getEndDate(),
-        questionary.getAnswersLimit(),
-        questionary.getAnonymous()
+        questionary.getAnswersLimit()
     );
 
     Set<QuestionDTO> questionDTOS = questions.stream().map(

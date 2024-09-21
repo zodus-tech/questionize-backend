@@ -34,4 +34,8 @@ public class Question {
 
   @OneToOne(mappedBy = "question", cascade = CascadeType.ALL)
   private Statistics statistics;
+
+  @ManyToOne
+  @JoinColumn(name = "memberId")
+  private Member member;
 }
