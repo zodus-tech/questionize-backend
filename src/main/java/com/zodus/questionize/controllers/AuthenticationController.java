@@ -8,13 +8,12 @@ import com.zodus.questionize.dto.requests.createAdministrator.CreateAdministrato
 import com.zodus.questionize.models.Administrator;
 import com.zodus.questionize.services.AdministratorService;
 import com.zodus.questionize.services.AuthenticationService;
+import com.zodus.questionize.services.TokenService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")
@@ -22,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthenticationController {
   private final AuthenticationService authenticationService;
   private final AdministratorService administratorService;
+  private final TokenService tokenService;
 
   @PostMapping("/login")
   public ResponseEntity<AuthenticationDTO> login(@RequestBody AuthenticationRequest request) {
@@ -41,6 +41,19 @@ public class AuthenticationController {
   public ResponseEntity<AdministratorDTO> register(@RequestBody CreateAdministratorRequest request) {
     Administrator administrator = administratorService.createNewUser(request);
     AdministratorDTO response = AdministratorDTOFactory.create(administrator);
+
+    return new ResponseEntity<>(response, HttpStatus.OK);
+  }
+
+  @PostMapping("/refresh")
+  public ResponseEntity<AuthenticationDTO> refresh(@RequestHeader(HttpHeaders.AUTHORIZATION) String authHeader) {
+    Administrator administrator = tokenService.extractUser(authHeader);
+    String token = tokenService.generateToken(administrator, true);
+
+    AuthenticationDTO response = new AuthenticationDTO(
+        AdministratorDTOFactory.create(administrator),
+        token
+    );
 
     return new ResponseEntity<>(response, HttpStatus.OK);
   }
