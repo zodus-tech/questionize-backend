@@ -1,8 +1,10 @@
 package com.zodus.questionize.controllers;
 
+import com.zodus.questionize.dto.AdministratorDTO;
 import com.zodus.questionize.dto.AuthenticationDTO;
 import com.zodus.questionize.dto.factories.AdministratorDTOFactory;
 import com.zodus.questionize.dto.requests.authentication.AuthenticationRequest;
+import com.zodus.questionize.dto.requests.createAdministrator.CreateAdministratorRequest;
 import com.zodus.questionize.models.Administrator;
 import com.zodus.questionize.services.AdministratorService;
 import com.zodus.questionize.services.AuthenticationService;
@@ -30,6 +32,15 @@ public class AuthenticationController {
         AdministratorDTOFactory.create(administrator),
         token
     );
+
+    return new ResponseEntity<>(response, HttpStatus.OK);
+  }
+
+
+  @PostMapping("/register")
+  public ResponseEntity<AdministratorDTO> register(@RequestBody CreateAdministratorRequest request) {
+    Administrator administrator = administratorService.createNewUser(request);
+    AdministratorDTO response = AdministratorDTOFactory.create(administrator);
 
     return new ResponseEntity<>(response, HttpStatus.OK);
   }
