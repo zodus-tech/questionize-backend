@@ -8,6 +8,9 @@ import com.zodus.questionize.models.Submission;
 import com.zodus.questionize.repositories.QuestionRepository;
 import com.zodus.questionize.repositories.SubmissionRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -48,5 +51,16 @@ public class SubmissionsService {
     submission.setAnswers(answers);
 
     return submissionRepository.save(submission);
+  }
+
+  public Submission getSubmission(UUID questionaryId, UUID id) throws ResponseStatusException {
+    return submissionRepository.findByIdAndQuestionaryId(id, questionaryId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+  }
+
+  public Page<Submission> getSubmissions(UUID questionaryId, Pageable pageable) {
+    Page<Submission> submissionPage = submissionRepository.findAllByQuestionaryId(pageable, questionaryId);
+    long size = submissionRepository.findAllByQuestionaryId(null, questionaryId).getTotalElements();
+
+    return new PageImpl<>(submissionPage.getContent(), pageable, size);
   }
 }

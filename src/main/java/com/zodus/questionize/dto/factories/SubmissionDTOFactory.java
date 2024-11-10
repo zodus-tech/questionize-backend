@@ -5,6 +5,10 @@ import com.zodus.questionize.dto.SubmissionDTO;
 import com.zodus.questionize.models.Questionary;
 import com.zodus.questionize.models.Submission;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedModel;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -28,5 +32,12 @@ public class SubmissionDTOFactory {
 
   public List<SubmissionDTO> create(List<Submission> submissions) {
     return submissions.stream().map(this::create).toList();
+  }
+
+  public PagedModel<SubmissionDTO> create(Page<Submission> submissionPage, Pageable pageable) {
+    List<Submission> submissions = submissionPage.getContent();
+    List<SubmissionDTO> submissionDTOS = create(submissions);
+    Page<SubmissionDTO> submissionDTOPage = new PageImpl<>(submissionDTOS, pageable, submissionPage.getTotalElements());
+    return new PagedModel<>(submissionDTOPage);
   }
 }
