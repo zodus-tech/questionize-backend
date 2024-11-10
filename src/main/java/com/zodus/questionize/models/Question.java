@@ -4,6 +4,7 @@ import com.zodus.questionize.enums.QuestionType;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -21,6 +22,8 @@ public class Question {
 
   @Column(nullable = false)
   private String text;
+
+  private List<String> options;
 
   @Column(nullable = false)
   private QuestionType questionType;

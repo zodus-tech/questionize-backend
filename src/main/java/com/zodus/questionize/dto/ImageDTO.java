@@ -8,10 +8,8 @@ public record ImageDTO(
     UUID id,
     String name,
     byte[] imageBytes,
-
     @Nullable
     UUID memberId,
-
     @Nullable
     UUID departmentId
 ) {

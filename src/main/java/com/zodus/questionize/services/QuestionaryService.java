@@ -1,6 +1,7 @@
 package com.zodus.questionize.services;
 
 import com.zodus.questionize.dto.requests.createQuestionary.CreateQuestionaryRequest;
+import com.zodus.questionize.enums.QuestionType;
 import com.zodus.questionize.models.Question;
 import com.zodus.questionize.models.Questionary;
 import com.zodus.questionize.repositories.QuestionaryRepository;
@@ -30,11 +31,17 @@ public class QuestionaryService {
         .build();
 
     Set<Question> questions = request.questions().stream().map(
-        questionDTO -> Question.builder()
-            .text(questionDTO.text())
-            .questionType(questionDTO.type())
-            .questionary(questionary)
-            .build()
+        questionDTO -> {
+          if (questionDTO.options() != null && !questionDTO.type().equals(QuestionType.MULTIPLE_CHOICE)) throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+          if (questionDTO.options() == null && questionDTO.type().equals(QuestionType.MULTIPLE_CHOICE)) throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+
+          return Question.builder()
+              .text(questionDTO.text())
+              .questionType(questionDTO.type())
+              .questionary(questionary)
+              .options(questionDTO.options())
+              .build();
+        }
     ).collect(Collectors.toSet());
 
     questionary.setQuestions(questions);

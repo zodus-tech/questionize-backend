@@ -25,7 +25,7 @@ public class QuestionaryDTOFactory {
     );
 
     Set<QuestionDTO> questionDTOS = questions.stream().map(
-        question -> new QuestionDTO(question.getId(), question.getText(), question.getQuestionType(), null)
+        question -> new QuestionDTO(question.getId(), question.getText(), question.getQuestionType(), null, question.getOptions())
     ).collect(Collectors.toSet());
 
     return new QuestionaryDTO(
