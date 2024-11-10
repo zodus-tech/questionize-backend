@@ -1,6 +1,6 @@
 package com.zodus.questionize.services;
 
-import com.zodus.questionize.dto.requests.createQuestionary.CreateQuestionaryRequest;
+import com.zodus.questionize.dto.requests.questionary.createQuestionary.CreateQuestionaryRequest;
 import com.zodus.questionize.enums.QuestionType;
 import com.zodus.questionize.models.Question;
 import com.zodus.questionize.models.Questionary;

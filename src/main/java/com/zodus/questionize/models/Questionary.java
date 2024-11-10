@@ -39,4 +39,7 @@ public class Questionary {
   @ManyToOne
   @JoinColumn(name = "departmentId")
   private Department department;
+
+  @OneToMany(mappedBy = "questionary", cascade = CascadeType.ALL)
+  private Set<Submission> submissions;
 }

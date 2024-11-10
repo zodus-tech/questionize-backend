@@ -2,7 +2,7 @@ package com.zodus.questionize.controllers;
 
 import com.zodus.questionize.dto.QuestionaryDTO;
 import com.zodus.questionize.dto.factories.QuestionaryDTOFactory;
-import com.zodus.questionize.dto.requests.createQuestionary.CreateQuestionaryRequest;
+import com.zodus.questionize.dto.requests.questionary.createQuestionary.CreateQuestionaryRequest;
 import com.zodus.questionize.models.Questionary;
 import com.zodus.questionize.services.QuestionaryService;
 import lombok.AllArgsConstructor;

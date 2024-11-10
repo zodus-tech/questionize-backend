@@ -19,16 +19,17 @@ public class Answer {
   private UUID id;
 
   @Column(nullable = false)
-  private String value;
-
-  @Column(nullable = false)
-  private LocalDateTime answeredAt;
+  private String answer;
 
   @ManyToOne
   @JoinColumn(name = "questionId", nullable = false)
   private Question question;
 
   @ManyToOne
-  @JoinColumn(name = "answerOccurrenceId", nullable = false)
+  @JoinColumn(name = "answerOccurrenceId")
   private AnswerOccurrence answerOccurrence;
+
+  @ManyToOne
+  @JoinColumn(name = "submissionId", nullable = false)
+  private Submission submission;
 }

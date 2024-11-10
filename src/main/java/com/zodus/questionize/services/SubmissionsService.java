@@ -1,0 +1,52 @@
+package com.zodus.questionize.services;
+
+import com.zodus.questionize.dto.requests.questionary.submission.SubmitRequest;
+import com.zodus.questionize.models.Answer;
+import com.zodus.questionize.models.Question;
+import com.zodus.questionize.models.Questionary;
+import com.zodus.questionize.models.Submission;
+import com.zodus.questionize.repositories.QuestionRepository;
+import com.zodus.questionize.repositories.SubmissionRepository;
+import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.time.LocalDateTime;
+import java.util.Set;
+import java.util.UUID;
+import java.util.stream.Collectors;
+
+@Service
+@AllArgsConstructor
+public class SubmissionsService {
+  private final SubmissionRepository submissionRepository;
+  private final QuestionaryService questionaryService;
+  private final QuestionRepository questionRepository;
+
+  public Submission submit(SubmitRequest request, UUID questionaryId) throws ResponseStatusException {
+    LocalDateTime submittedAt = LocalDateTime.now();
+    Questionary questionary = questionaryService.getQuestionaryById(questionaryId);
+
+    Submission submission = Submission.builder()
+        .submittedAt(submittedAt)
+        .questionary(questionary)
+        .build();
+
+    Set<Answer> answers = request.answers().stream().map(
+        answer -> {
+          Question question = questionRepository.findById(answer.questionId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+          return Answer.builder()
+              .answer(answer.answer())
+              .question(question)
+              .submission(submission)
+              .build();
+        }
+    ).collect(Collectors.toSet());
+
+    submission.setAnswers(answers);
+
+    return submissionRepository.save(submission);
+  }
+}
