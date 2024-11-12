@@ -3,12 +3,15 @@ package com.zodus.questionize.dto.factories;
 import com.zodus.questionize.dto.QuestionDTO;
 import com.zodus.questionize.dto.QuestionaryDTO;
 import com.zodus.questionize.dto.QuestionaryOptionsDTO;
+import com.zodus.questionize.models.Image;
 import com.zodus.questionize.models.Question;
 import com.zodus.questionize.models.Questionary;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
 import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Component
@@ -28,12 +31,16 @@ public class QuestionaryDTOFactory {
         question -> new QuestionDTO(question.getId(), question.getText(), question.getQuestionType(), null, question.getOptions())
     ).collect(Collectors.toSet());
 
+    Optional<Image> banner = Optional.ofNullable(questionary.getBanner());
+    UUID bannerId = banner.map(Image::getId).orElse(null);
+
     return new QuestionaryDTO(
         questionary.getId(),
         questionary.getTitle(),
         questionary.getCreatedAt(),
         questionaryOptionsDTO,
-        questionDTOS
+        questionDTOS,
+        bannerId
     );
   }
 }

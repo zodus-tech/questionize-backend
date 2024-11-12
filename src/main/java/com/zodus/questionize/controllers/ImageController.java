@@ -29,17 +29,7 @@ public class ImageController {
     return new ResponseEntity<>(response, HttpStatus.OK);
   }
 
-  @GetMapping("/questionary/{id}")
-  private ResponseEntity<ImageDTO> getImageByQuestionaryId(@RequestParam UUID id) {
-    return null;
-  }
-
-  @GetMapping("/member/{id}")
-  private ResponseEntity<ImageDTO> getImageByMemberId(@RequestParam UUID id) {
-    return null;
-  }
-
-  @PostMapping("/add")
+  @PostMapping("/save")
   private ResponseEntity<ImageDTO> saveImage(@RequestPart("request") SaveImageRequest request, @RequestPart("imageFile") MultipartFile multipartFile) throws IOException {
     Image image = imageService.saveImage(request, multipartFile);
     ImageDTO response = imageDTOFactory.create(image);

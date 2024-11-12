@@ -21,7 +21,7 @@ public class Member {
   @Column(nullable = false)
   private String name;
 
-  @OneToOne
+  @OneToOne(cascade = CascadeType.ALL)
   @JoinColumn(name = "imageId")
   private Image picture;
 

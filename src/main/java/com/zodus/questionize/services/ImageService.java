@@ -5,6 +5,8 @@ import com.zodus.questionize.models.Image;
 import com.zodus.questionize.models.Member;
 import com.zodus.questionize.models.Questionary;
 import com.zodus.questionize.repositories.ImageRepository;
+import com.zodus.questionize.repositories.MemberRepository;
+import com.zodus.questionize.repositories.QuestionaryRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -21,27 +23,30 @@ public class ImageService {
   private final static Base64.Encoder ENCODER = Base64.getEncoder();
   private final static Base64.Decoder DECODER = Base64.getDecoder();
   private final ImageRepository imageRepository;
+  private final QuestionaryRepository questionaryRepository;
+  private final MemberRepository memberRepository;
   private final QuestionaryService questionaryService;
   private final MemberService memberService;
 
   public Image saveImage(SaveImageRequest request, MultipartFile multipartFile) throws IOException {
-    Member member = null;
-    Questionary questionary = null;
-
-    if (request.memberId().isPresent()) {
-      member = memberService.getMemberById(request.memberId().get());
-    }
-    if (request.questionaryId().isPresent()) {
-      questionary = questionaryService.getQuestionaryById(request.questionaryId().get());
-    }
-
     Image image = Image.builder()
         .name(request.name().orElse(multipartFile.getName()))
         .type(multipartFile.getContentType())
         .imageData(ENCODER.encodeToString(multipartFile.getBytes()))
-        .member(member)
-        .questionary(questionary)
         .build();
+
+    if (request.memberId().isPresent()) {
+      Member member = memberService.getMemberById(request.memberId().get());
+      image.setMember(member);
+      member.setPicture(image);
+      memberRepository.save(member);
+    }
+    if (request.questionaryId().isPresent()) {
+      Questionary questionary = questionaryService.getQuestionaryById(request.questionaryId().get());
+      image.setQuestionary(questionary);
+      questionary.setBanner(image);
+      questionaryRepository.save(questionary);
+    }
 
     return imageRepository.save(image);
   }

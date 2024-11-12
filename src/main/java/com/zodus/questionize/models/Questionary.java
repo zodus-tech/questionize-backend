@@ -32,7 +32,7 @@ public class Questionary {
   @OneToMany(mappedBy = "questionary", cascade = CascadeType.ALL)
   private Set<Question> questions;
 
-  @OneToOne
+  @OneToOne(cascade = CascadeType.ALL)
   @JoinColumn(name = "imageId")
   private Image banner;
 

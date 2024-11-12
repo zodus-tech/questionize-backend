@@ -24,9 +24,9 @@ public class Image {
   @Column(columnDefinition = "MEDIUMBLOB")
   private String imageData;
 
-  @OneToOne(mappedBy = "picture")
+  @OneToOne(mappedBy = "picture", cascade = CascadeType.ALL)
   private Member member;
 
-  @OneToOne(mappedBy = "banner")
+  @OneToOne(mappedBy = "banner", cascade = CascadeType.ALL)
   private Questionary questionary;
 }

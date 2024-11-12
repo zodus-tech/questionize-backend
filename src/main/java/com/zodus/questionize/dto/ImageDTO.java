@@ -11,6 +11,6 @@ public record ImageDTO(
     @Nullable
     UUID memberId,
     @Nullable
-    UUID departmentId
+    UUID questionaryId
 ) {
 }

@@ -1,6 +1,7 @@
 package com.zodus.questionize.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.annotation.Nullable;
 
 import java.time.LocalDateTime;
 import java.util.Set;
@@ -12,6 +13,8 @@ public record QuestionaryDTO(
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     LocalDateTime createdAt,
     QuestionaryOptionsDTO options,
-    Set<QuestionDTO> questions
+    Set<QuestionDTO> questions,
+    @Nullable
+    UUID imageId
 ) {
 }
