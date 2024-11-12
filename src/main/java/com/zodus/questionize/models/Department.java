@@ -26,4 +26,7 @@ public class Department {
 
   @OneToMany(mappedBy = "department")
   private Set<Questionary> questionaries;
+
+  @OneToMany(mappedBy = "department")
+  private Set<Member> members;
 }

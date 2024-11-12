@@ -27,4 +27,8 @@ public class Member {
 
   @OneToMany(mappedBy = "member")
   private Set<Question> questions;
+
+  @ManyToOne
+  @JoinColumn(name = "departmentId")
+  private Department department;
 }

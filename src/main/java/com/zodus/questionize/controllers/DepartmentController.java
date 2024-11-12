@@ -22,11 +22,12 @@ import java.util.UUID;
 @AllArgsConstructor
 public class DepartmentController {
   private final DepartmentService departmentService;
+  private final DepartmentDTOFactory departmentDTOFactory;
 
   @PostMapping("/create")
-  public ResponseEntity<DepartmentDTO> createDepartment(CreateDepartmentRequest request) {
+  public ResponseEntity<DepartmentDTO> createDepartment(@RequestBody CreateDepartmentRequest request) {
     Department department = departmentService.createDepartment(request);
-    DepartmentDTO response = DepartmentDTOFactory.create(department);
+    DepartmentDTO response = departmentDTOFactory.create(department);
 
     return new ResponseEntity<>(response, HttpStatus.CREATED);
   }
@@ -35,7 +36,7 @@ public class DepartmentController {
   public ResponseEntity<PagedModel<DepartmentDTO>> findAllDepartments(Pageable pageable) {
     Page<Department> departmentsPage = departmentService.findAllDepartments(pageable);
 
-    List<DepartmentDTO> departmentDTOList = DepartmentDTOFactory.create(departmentsPage.getContent());
+    List<DepartmentDTO> departmentDTOList = departmentDTOFactory.create(departmentsPage.getContent());
     Page<DepartmentDTO> departmentsDTOPage = new PageImpl<>(departmentDTOList, pageable, departmentsPage.getTotalElements());
     PagedModel<DepartmentDTO> response = new PagedModel<>(departmentsDTOPage);
 
@@ -45,7 +46,7 @@ public class DepartmentController {
   @GetMapping("/id/{id}")
   public ResponseEntity<DepartmentDTO> findDepartmentById(@PathVariable UUID id) {
     Department department = departmentService.findById(id);
-    DepartmentDTO response = DepartmentDTOFactory.create(department);
+    DepartmentDTO response = departmentDTOFactory.create(department);
 
     return new ResponseEntity<>(response, HttpStatus.OK);
   }
@@ -53,7 +54,7 @@ public class DepartmentController {
   @GetMapping("/name/{name}")
   public ResponseEntity<DepartmentDTO> findDepartmentByName(@PathVariable String name) {
     Department department = departmentService.findByName(name);
-    DepartmentDTO response = DepartmentDTOFactory.create(department);
+    DepartmentDTO response = departmentDTOFactory.create(department);
 
     return new ResponseEntity<>(response, HttpStatus.OK);
   }
