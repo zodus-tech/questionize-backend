@@ -21,7 +21,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfiguration {
   private final JwtFilter jwtFilter;
 
-  private static final String[] authorizedUrls = {"/auth/login"};
+  private static final String[] authorizedUrls = {"/auth/login", "/questionary/{questionaryId}/submit", "/questionary/all", "/questionary/{id}"};
 
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
