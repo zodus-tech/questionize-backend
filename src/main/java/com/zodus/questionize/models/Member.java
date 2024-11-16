@@ -3,7 +3,6 @@ package com.zodus.questionize.models;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.Set;
 import java.util.UUID;
 
 @Getter
@@ -24,9 +23,6 @@ public class Member {
   @OneToOne(cascade = CascadeType.ALL)
   @JoinColumn(name = "imageId")
   private Image picture;
-
-  @OneToMany(mappedBy = "member")
-  private Set<Question> questions;
 
   @ManyToOne
   @JoinColumn(name = "departmentId")
