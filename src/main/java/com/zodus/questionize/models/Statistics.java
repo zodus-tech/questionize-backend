@@ -1,5 +1,6 @@
 package com.zodus.questionize.models;
 
+import com.zodus.questionize.models.questions.Question;
 import jakarta.persistence.*;
 import lombok.*;
 

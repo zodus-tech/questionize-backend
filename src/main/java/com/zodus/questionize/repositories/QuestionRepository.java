@@ -1,6 +1,6 @@
 package com.zodus.questionize.repositories;
 
-import com.zodus.questionize.models.Question;
+import com.zodus.questionize.models.questions.Question;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

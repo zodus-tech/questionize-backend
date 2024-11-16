@@ -1,4 +1,4 @@
-package com.zodus.questionize.enums;
+package com.zodus.questionize.models.questions;
 
 public enum QuestionType {
   BOOLEAN,
