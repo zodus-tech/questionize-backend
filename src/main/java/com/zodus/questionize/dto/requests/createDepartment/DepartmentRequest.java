@@ -1,6 +1,6 @@
 package com.zodus.questionize.dto.requests.createDepartment;
 
-public record CreateDepartmentRequest(
+public record DepartmentRequest(
     String name
 ) {
 }

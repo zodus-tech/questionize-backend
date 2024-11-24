@@ -2,7 +2,7 @@ package com.zodus.questionize.controllers;
 
 import com.zodus.questionize.dto.DepartmentDTO;
 import com.zodus.questionize.dto.factories.DepartmentDTOFactory;
-import com.zodus.questionize.dto.requests.createDepartment.CreateDepartmentRequest;
+import com.zodus.questionize.dto.requests.createDepartment.DepartmentRequest;
 import com.zodus.questionize.models.Department;
 import com.zodus.questionize.services.DepartmentService;
 import lombok.AllArgsConstructor;
@@ -25,11 +25,26 @@ public class DepartmentController {
   private final DepartmentDTOFactory departmentDTOFactory;
 
   @PostMapping("/create")
-  public ResponseEntity<DepartmentDTO> createDepartment(@RequestBody CreateDepartmentRequest request) {
+  public ResponseEntity<DepartmentDTO> createDepartment(@RequestBody DepartmentRequest request) {
     Department department = departmentService.createDepartment(request);
     DepartmentDTO response = departmentDTOFactory.create(department);
 
     return new ResponseEntity<>(response, HttpStatus.CREATED);
+  }
+
+  @PatchMapping("/update/{id}")
+  public ResponseEntity<DepartmentDTO> updateDepartment(@RequestBody DepartmentRequest request, @PathVariable UUID id) {
+    Department department = departmentService.updateDepartment(request, id);
+    DepartmentDTO response = departmentDTOFactory.create(department);
+
+    return new ResponseEntity<>(response, HttpStatus.CREATED);
+  }
+
+  @DeleteMapping("/delete/{id}")
+  public ResponseEntity<?> deleteDepartment(@PathVariable UUID id) {
+    departmentService.deleteDepartment(id);
+
+    return new ResponseEntity<>(HttpStatus.NO_CONTENT);
   }
 
   @GetMapping("/all")

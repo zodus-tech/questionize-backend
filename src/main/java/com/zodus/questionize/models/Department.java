@@ -21,12 +21,12 @@ public class Department {
   @Column(unique = true)
   private String name;
 
-  @OneToMany(mappedBy = "department")
+  @OneToMany(mappedBy = "department", cascade = CascadeType.ALL)
   private Set<Administrator> administrators;
 
-  @OneToMany(mappedBy = "department")
+  @OneToMany(mappedBy = "department", cascade = CascadeType.ALL)
   private Set<Questionary> questionnaires;
 
-  @OneToMany(mappedBy = "department")
+  @OneToMany(mappedBy = "department", cascade = CascadeType.ALL)
   private Set<Member> members;
 }
