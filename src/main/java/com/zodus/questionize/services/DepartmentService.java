@@ -21,16 +21,15 @@ public class DepartmentService {
   private final DepartmentRepository departmentRepository;
 
   public Department createDepartment(DepartmentRequest request) {
-    Department department = Department.builder()
-        .name(request.name())
-        .build();
+    Department department = new Department(request.name());
 
     return departmentRepository.save(department);
   }
 
   public Department updateDepartment(DepartmentRequest request, UUID id) throws ResponseStatusException {
     Department department = departmentRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-    department.setName(request.name());
+
+    if (request.name() != null) department.setName(request.name());
 
     return departmentRepository.save(department);
   }

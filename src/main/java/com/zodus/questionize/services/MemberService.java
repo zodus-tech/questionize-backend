@@ -1,6 +1,6 @@
 package com.zodus.questionize.services;
 
-import com.zodus.questionize.dto.requests.createMember.CreateMemberRequest;
+import com.zodus.questionize.dto.requests.createMember.MemberRequest;
 import com.zodus.questionize.models.Department;
 import com.zodus.questionize.models.Member;
 import com.zodus.questionize.repositories.MemberRepository;
@@ -20,10 +20,10 @@ public class MemberService {
   private final MemberRepository memberRepository;
   private final DepartmentService departmentService;
 
-  public Member createMember(CreateMemberRequest createMemberRequest) {
-    Department department = departmentService.findById(createMemberRequest.departmentId());
+  public Member createMember(MemberRequest memberRequest) {
+    Department department = departmentService.findById(memberRequest.departmentId());
     Member member = Member.builder()
-        .name(createMemberRequest.name())
+        .name(memberRequest.name())
         .department(department)
         .build();
 
@@ -44,5 +44,17 @@ public class MemberService {
   public void deleteMember(UUID id) throws ResponseStatusException {
     Member member = memberRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     memberRepository.delete(member);
+  }
+
+  public Member updateMember(MemberRequest request, UUID id) throws ResponseStatusException {
+    Member member = memberRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+    if (request.name() != null) member.setName(request.name());
+    if (request.departmentId() != null) {
+      Department department = departmentService.findById(request.departmentId());
+      member.setDepartment(department);
+    }
+
+    return memberRepository.save(member);
   }
 }
