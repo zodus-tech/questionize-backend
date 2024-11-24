@@ -12,15 +12,14 @@ public record QuestionDTO(
     UUID id,
     QuestionType type,
     String text,
-    StatisticsDTO statistics,
     @Nullable List<String> options,
     @Nullable UUID memberId
 ) {
-  public QuestionDTO(UUID id, QuestionType type, String text, StatisticsDTO statistics) {
-    this(id, type, text, statistics, null, null);
+  public QuestionDTO(UUID id, QuestionType type, String text) {
+    this(id, type, text, null, null);
   }
 
-  public QuestionDTO(UUID id, QuestionType type, String text, StatisticsDTO statistics, List<String> options) {
-    this(id, type, text, statistics, options, null);
+  public QuestionDTO(UUID id, QuestionType type, String text, List<String> options) {
+    this(id, type, text, options, null);
   }
 }
