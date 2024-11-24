@@ -10,9 +10,11 @@ import org.springframework.stereotype.Component;
 @Component
 @AllArgsConstructor
 public class AdministratorDTOFactory {
-  public static AdministratorDTO create(Administrator administrator) {
+  private final DepartmentDTOFactory departmentDTOFactory;
+
+  public AdministratorDTO create(Administrator administrator) {
     Department department = administrator.getDepartment();
-    DepartmentDTO departmentDTO = new DepartmentDTO(department.getId(), department.getName());
+    DepartmentDTO departmentDTO = departmentDTOFactory.create(department);
     return new AdministratorDTO(
         administrator.getId(),
         administrator.getName(),

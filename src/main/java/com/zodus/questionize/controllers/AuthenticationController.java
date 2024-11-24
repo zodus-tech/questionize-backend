@@ -22,6 +22,7 @@ public class AuthenticationController {
   private final AuthenticationService authenticationService;
   private final AdministratorService administratorService;
   private final TokenService tokenService;
+  private final AdministratorDTOFactory administratorDTOFactory;
 
   @PostMapping("/login")
   public ResponseEntity<AuthenticationDTO> login(@RequestBody AuthenticationRequest request) {
@@ -29,7 +30,7 @@ public class AuthenticationController {
     Administrator administrator = administratorService.loadUserByUsername(request.username());
 
     AuthenticationDTO response = new AuthenticationDTO(
-        AdministratorDTOFactory.create(administrator),
+        administratorDTOFactory.create(administrator),
         token
     );
 
@@ -40,7 +41,7 @@ public class AuthenticationController {
   @PostMapping("/register")
   public ResponseEntity<AdministratorDTO> register(@RequestBody CreateAdministratorRequest request) {
     Administrator administrator = administratorService.createNewUser(request);
-    AdministratorDTO response = AdministratorDTOFactory.create(administrator);
+    AdministratorDTO response = administratorDTOFactory.create(administrator);
 
     return new ResponseEntity<>(response, HttpStatus.OK);
   }
@@ -51,7 +52,7 @@ public class AuthenticationController {
     String token = tokenService.generateToken(administrator, true);
 
     AuthenticationDTO response = new AuthenticationDTO(
-        AdministratorDTOFactory.create(administrator),
+        administratorDTOFactory.create(administrator),
         token
     );
 
