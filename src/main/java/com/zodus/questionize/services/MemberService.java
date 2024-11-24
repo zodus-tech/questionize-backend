@@ -40,4 +40,9 @@ public class MemberService {
 
     return new PageImpl<>(memberPage.getContent(), pageable, size);
   }
+
+  public void deleteMember(UUID id) throws ResponseStatusException {
+    Member member = memberRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    memberRepository.delete(member);
+  }
 }

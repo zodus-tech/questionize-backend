@@ -12,6 +12,7 @@ import org.springframework.data.web.PagedModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.UUID;
 
@@ -44,5 +45,12 @@ public class MemberController {
     PagedModel<MemberDTO> response = memberDTOFactory.create(member, pageable);
 
     return new ResponseEntity<>(response, HttpStatus.OK);
+  }
+
+  @DeleteMapping("/delete/{id}")
+  public ResponseEntity<?> deleteMember(@PathVariable UUID id) {
+    memberService.deleteMember(id);
+
+    return new ResponseEntity<>(HttpStatus.NO_CONTENT);
   }
 }
