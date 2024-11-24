@@ -4,7 +4,7 @@ import com.zodus.questionize.dto.QuestionDTO;
 import com.zodus.questionize.dto.QuestionaryDTO;
 import com.zodus.questionize.dto.QuestionaryOptionsDTO;
 import com.zodus.questionize.models.Image;
-import com.zodus.questionize.models.Question;
+import com.zodus.questionize.models.questions.Question;
 import com.zodus.questionize.models.Questionary;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -27,9 +27,7 @@ public class QuestionaryDTOFactory {
         questionary.getAnswersLimit()
     );
 
-    Set<QuestionDTO> questionDTOS = questions.stream().map(
-        question -> new QuestionDTO(question.getId(), question.getText(), question.getQuestionType(), null, question.getOptions())
-    ).collect(Collectors.toSet());
+    Set<QuestionDTO> questionDTOS = questions.stream().map(QuestionDTOFactory::create).collect(Collectors.toSet());
 
     Optional<Image> banner = Optional.ofNullable(questionary.getBanner());
     UUID bannerId = banner.map(Image::getId).orElse(null);

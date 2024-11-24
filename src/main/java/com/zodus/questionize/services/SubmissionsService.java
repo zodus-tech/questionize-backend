@@ -2,7 +2,7 @@ package com.zodus.questionize.services;
 
 import com.zodus.questionize.dto.requests.questionary.submission.SubmitRequest;
 import com.zodus.questionize.models.Answer;
-import com.zodus.questionize.models.Question;
+import com.zodus.questionize.models.questions.Question;
 import com.zodus.questionize.models.Questionary;
 import com.zodus.questionize.models.Submission;
 import com.zodus.questionize.repositories.QuestionRepository;

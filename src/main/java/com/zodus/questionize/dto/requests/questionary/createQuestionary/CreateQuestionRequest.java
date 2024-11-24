@@ -1,6 +1,6 @@
 package com.zodus.questionize.dto.requests.questionary.createQuestionary;
 
-import com.zodus.questionize.enums.QuestionType;
+import com.zodus.questionize.models.questions.QuestionType;
 import jakarta.annotation.Nullable;
 
 import java.util.List;
