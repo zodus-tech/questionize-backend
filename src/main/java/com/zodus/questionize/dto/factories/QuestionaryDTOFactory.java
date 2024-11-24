@@ -9,17 +9,16 @@ import com.zodus.questionize.models.Questionary;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Component
 @AllArgsConstructor
 public class QuestionaryDTOFactory {
 
   public static QuestionaryDTO create(Questionary questionary) {
-    Set<Question> questions = questionary.getQuestions();
+    List<Question> questions = questionary.getQuestions();
 
     QuestionaryOptionsDTO questionaryOptionsDTO = new QuestionaryOptionsDTO(
         questionary.getStartDate(),
@@ -27,7 +26,7 @@ public class QuestionaryDTOFactory {
         questionary.getAnswersLimit()
     );
 
-    Set<QuestionDTO> questionDTOS = questions.stream().map(QuestionDTOFactory::create).collect(Collectors.toSet());
+    List<QuestionDTO> questionDTOS = questions.stream().map(QuestionDTOFactory::create).toList();
 
     Optional<Image> banner = Optional.ofNullable(questionary.getBanner());
     UUID bannerId = banner.map(Image::getId).orElse(null);

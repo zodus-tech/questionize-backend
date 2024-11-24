@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -31,7 +32,7 @@ public class Questionary {
   private Integer answersLimit;
 
   @OneToMany(mappedBy = "questionary", cascade = CascadeType.ALL)
-  private Set<Question> questions;
+  private List<Question> questions;
 
   @OneToOne(cascade = CascadeType.ALL)
   @JoinColumn(name = "imageId")

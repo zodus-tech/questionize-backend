@@ -15,9 +15,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
-import java.util.Set;
+import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -34,14 +33,9 @@ public class QuestionaryService {
         .answersLimit(request.options().answersLimit())
         .build();
 
-    Set<Question> questions = request.questions().stream().map(
-        questionDTO -> {
-          if (questionDTO.options() != null && !questionDTO.type().equals(QuestionType.MULTIPLE_CHOICE)) throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
-          if (questionDTO.options() == null && questionDTO.type().equals(QuestionType.MULTIPLE_CHOICE)) throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
-
-          return questionFactory.create(questionDTO, questionary);
-        }
-    ).collect(Collectors.toSet());
+    List<Question> questions = request.questions().stream().map(
+        questionDTO -> questionFactory.create(questionDTO, questionary)
+    ).toList();
 
     questionary.setQuestions(questions);
 
