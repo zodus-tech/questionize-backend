@@ -3,7 +3,9 @@ package com.zodus.questionize.controllers;
 import com.zodus.questionize.dto.MemberDTO;
 import com.zodus.questionize.dto.factories.MemberDTOFactory;
 import com.zodus.questionize.dto.requests.createMember.MemberRequest;
+import com.zodus.questionize.models.Department;
 import com.zodus.questionize.models.Member;
+import com.zodus.questionize.services.DepartmentService;
 import com.zodus.questionize.services.MemberService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -21,6 +23,7 @@ import java.util.UUID;
 public class MemberController {
   private final MemberService memberService;
   private final MemberDTOFactory memberDTOFactory;
+  private final DepartmentService departmentService;
 
   @PostMapping("/create")
   public ResponseEntity<MemberDTO> createMember(@RequestBody MemberRequest request) {
@@ -41,6 +44,15 @@ public class MemberController {
   @GetMapping("/all")
   public ResponseEntity<PagedModel<MemberDTO>> findAllMembers(Pageable pageable) {
     Page<Member> member = memberService.getAllMembers(pageable);
+    PagedModel<MemberDTO> response = memberDTOFactory.create(member, pageable);
+
+    return new ResponseEntity<>(response, HttpStatus.OK);
+  }
+
+  @GetMapping("/department/{id}/all")
+  public ResponseEntity<PagedModel<MemberDTO>> findAllMembersByDepartment(Pageable pageable, @PathVariable UUID id) {
+    Department department = departmentService.findById(id);
+    Page<Member> member = memberService.getAllMembersByDepartment(pageable, department);
     PagedModel<MemberDTO> response = memberDTOFactory.create(member, pageable);
 
     return new ResponseEntity<>(response, HttpStatus.OK);

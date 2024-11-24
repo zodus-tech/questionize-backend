@@ -57,4 +57,11 @@ public class MemberService {
 
     return memberRepository.save(member);
   }
+
+  public Page<Member> getAllMembersByDepartment(Pageable pageable, Department department) {
+    Page<Member> memberPage = memberRepository.findAllByDepartment(pageable, department);
+    long size = memberRepository.countByDepartment(department);
+
+    return new PageImpl<>(memberPage.getContent(), pageable, size);
+  }
 }
