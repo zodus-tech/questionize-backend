@@ -5,6 +5,6 @@ import com.zodus.questionize.models.questions.Question;
 
 public class DefaultQuestionDTOFactory {
   public static QuestionDTO create(Question question) {
-    return new QuestionDTO(question.getId(), question.getType(), question.getText(), null, null);
+    return new QuestionDTO(question.getId(), question.getType(), question.getText(), null);
   }
 }

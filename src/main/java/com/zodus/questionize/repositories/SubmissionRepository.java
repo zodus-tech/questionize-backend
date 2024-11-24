@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -13,4 +14,6 @@ import java.util.UUID;
 public interface SubmissionRepository extends JpaRepository<Submission, UUID> {
   Optional<Submission> findByIdAndQuestionaryId(UUID id, UUID questionaryId);
   Page<Submission> findAllByQuestionaryId(Pageable pageable, UUID questionaryId);
+
+  long countBySubmittedAtBetween(LocalDateTime from, LocalDateTime to);
 }
