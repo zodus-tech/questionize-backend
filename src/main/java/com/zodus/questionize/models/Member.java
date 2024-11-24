@@ -1,8 +1,10 @@
 package com.zodus.questionize.models;
 
+import com.zodus.questionize.models.questions.types.RatingQuestion;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -27,4 +29,7 @@ public class Member {
   @ManyToOne
   @JoinColumn(name = "departmentId")
   private Department department;
+
+  @OneToMany(cascade = CascadeType.ALL)
+  private List<RatingQuestion> ratingQuestions;
 }

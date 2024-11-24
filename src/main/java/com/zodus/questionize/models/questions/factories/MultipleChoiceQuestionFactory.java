@@ -4,10 +4,11 @@ import com.zodus.questionize.dto.requests.questionary.createQuestionary.CreateQu
 import com.zodus.questionize.models.Questionary;
 import com.zodus.questionize.models.questions.QuestionType;
 import com.zodus.questionize.models.questions.types.MultipleChoiceQuestion;
+import org.springframework.stereotype.Component;
 
+@Component
 public class MultipleChoiceQuestionFactory {
-
-  public static MultipleChoiceQuestion create(CreateQuestionRequest request, Questionary questionary) {
+  public MultipleChoiceQuestion create(CreateQuestionRequest request, Questionary questionary) {
     MultipleChoiceQuestion multipleChoiceQuestion = new MultipleChoiceQuestion();
     multipleChoiceQuestion.setText(request.text());
     multipleChoiceQuestion.setType(QuestionType.MULTIPLE_CHOICE);

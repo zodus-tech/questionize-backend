@@ -13,6 +13,7 @@ public record QuestionDTO(
     QuestionType type,
     String text,
     StatisticsDTO statistics,
-    @Nullable List<String> options
+    @Nullable List<String> options,
+    @Nullable UUID memberId
 ) {
 }
