@@ -56,10 +56,9 @@ public class QuestionaryService {
     return questionaryRepository.findAllByOrderByCreatedAtAsc(pageable);
   }
 
-  public boolean deleteQuestionaryById(UUID id) throws ResponseStatusException {
+  public void deleteQuestionaryById(UUID id) throws ResponseStatusException {
     questionaryRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
     questionaryRepository.deleteById(id);
-    return questionaryRepository.findById(id).isEmpty();
   }
 }

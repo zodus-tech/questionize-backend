@@ -53,8 +53,8 @@ public class QuestionaryController {
 
   @DeleteMapping("/delete/{id}")
   public ResponseEntity<Boolean> deleteQuestionary(@PathVariable UUID id) {
-    boolean successfullyDeleted = questionaryService.deleteQuestionaryById(id);
+    questionaryService.deleteQuestionaryById(id);
 
-    return new ResponseEntity<>(successfullyDeleted, HttpStatus.OK);
+    return new ResponseEntity<>(HttpStatus.NO_CONTENT);
   }
 }
