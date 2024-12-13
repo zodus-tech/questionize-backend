@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
-import java.util.Set;
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -23,7 +23,7 @@ public class Submission {
   private LocalDateTime submittedAt;
 
   @OneToMany(mappedBy = "submission", cascade = CascadeType.ALL)
-  private Set<Answer> answers;
+  private List<Answer> answers;
 
   @ManyToOne
   @JoinColumn(name = "questionaryId", nullable = false)

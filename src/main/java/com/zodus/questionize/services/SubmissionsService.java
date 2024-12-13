@@ -16,9 +16,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
-import java.util.Set;
+import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -36,7 +35,7 @@ public class SubmissionsService {
         .questionary(questionary)
         .build();
 
-    Set<Answer> answers = request.answers().stream().map(
+    List<Answer> answers = request.answers().stream().map(
         answer -> {
           Question question = questionRepository.findById(answer.questionId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
@@ -46,7 +45,7 @@ public class SubmissionsService {
               .submission(submission)
               .build();
         }
-    ).collect(Collectors.toSet());
+    ).toList();
 
     submission.setAnswers(answers);
 

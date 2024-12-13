@@ -4,7 +4,7 @@ import com.zodus.questionize.models.questions.Question;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.Set;
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -26,5 +26,5 @@ public class Statistics {
   private Question question;
 
   @OneToMany(mappedBy = "statistics", cascade = CascadeType.ALL)
-  private Set<AnswerOccurrence> answerOccurrences;
+  private List<AnswerOccurrence> answerOccurrences;
 }

@@ -3,7 +3,7 @@ package com.zodus.questionize.models;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.Set;
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -25,7 +25,7 @@ public class AnswerOccurrence {
   private Integer numberOfOccurrences;
 
   @OneToMany(mappedBy = "answerOccurrence", cascade = CascadeType.ALL)
-  private Set<Answer> relatedAnswers;
+  private List<Answer> relatedAnswers;
 
   @ManyToOne
   @JoinColumn(name = "statisticsId", nullable = false)

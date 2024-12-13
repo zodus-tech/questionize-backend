@@ -6,7 +6,7 @@ import com.zodus.questionize.models.Statistics;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.Set;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -27,7 +27,7 @@ public class Question {
   protected Questionary questionary;
 
   @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
-  protected Set<Answer> answers;
+  protected List<Answer> answers;
 
   @OneToOne(mappedBy = "question", cascade = CascadeType.ALL)
   protected Statistics statistics;

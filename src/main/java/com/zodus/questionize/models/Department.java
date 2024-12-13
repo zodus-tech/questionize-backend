@@ -3,9 +3,7 @@ package com.zodus.questionize.models;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 @Getter
 @Setter
@@ -22,13 +20,13 @@ public class Department {
   private String name;
 
   @OneToMany(mappedBy = "department", cascade = CascadeType.ALL)
-  private Set<Administrator> administrators = new HashSet<>();
+  private List<Administrator> administrators = new ArrayList<>();
 
   @OneToMany(mappedBy = "department", cascade = CascadeType.ALL)
-  private Set<Questionary> questionnaires = new HashSet<>();
+  private List<Questionary> questionnaires = new ArrayList<>();
 
   @OneToMany(mappedBy = "department", cascade = CascadeType.ALL)
-  private Set<Member> members = new HashSet<>();
+  private List<Member> members = new ArrayList<>();
 
   public Department(String name) {
     this.name = name;

@@ -6,7 +6,6 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 
 @Getter
@@ -43,5 +42,5 @@ public class Questionary {
   private Department department;
 
   @OneToMany(mappedBy = "questionary", cascade = CascadeType.ALL)
-  private Set<Submission> submissions;
+  private List<Submission> submissions;
 }
