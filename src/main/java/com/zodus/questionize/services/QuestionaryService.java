@@ -1,6 +1,7 @@
 package com.zodus.questionize.services;
 
 import com.zodus.questionize.dto.requests.questionary.createQuestionary.CreateQuestionaryRequest;
+import com.zodus.questionize.models.Member;
 import com.zodus.questionize.models.questions.QuestionFactory;
 import com.zodus.questionize.models.questions.QuestionType;
 import com.zodus.questionize.models.questions.Question;
@@ -23,14 +24,18 @@ import java.util.UUID;
 public class QuestionaryService {
   private final QuestionaryRepository questionaryRepository;
   private final QuestionFactory questionFactory;
+  private final MemberService memberService;
 
   public Questionary createQuestionary(CreateQuestionaryRequest request) {
+    List<Member> members = request.options().membersIds().stream().map(memberService::getMemberById).toList();
+
     Questionary questionary = Questionary.builder()
         .title(request.title())
         .createdAt(LocalDateTime.now())
         .startDate(request.options().startDate())
         .endDate(request.options().endDate())
         .answersLimit(request.options().answersLimit())
+        .members(members)
         .build();
 
     List<Question> questions = request.questions().stream().map(

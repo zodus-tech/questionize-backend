@@ -30,6 +30,6 @@ public class Member {
   @JoinColumn(name = "departmentId")
   private Department department;
 
-  @OneToMany(cascade = CascadeType.ALL)
-  private List<RatingQuestion> ratingQuestions;
+  @ManyToMany(mappedBy = "members", cascade = CascadeType.ALL)
+  private List<Questionary> questionnaires;
 }

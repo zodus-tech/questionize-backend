@@ -1,5 +1,6 @@
 package com.zodus.questionize.dto.factories;
 
+import com.zodus.questionize.dto.MemberDTO;
 import com.zodus.questionize.dto.QuestionDTO;
 import com.zodus.questionize.dto.QuestionaryDTO;
 import com.zodus.questionize.dto.QuestionaryOptionsDTO;
@@ -17,14 +18,17 @@ import java.util.UUID;
 @AllArgsConstructor
 public class QuestionaryDTOFactory {
   private final QuestionDTOFactory questionDTOFactory;
+  private final MemberDTOFactory memberDTOFactory;
 
   public QuestionaryDTO create(Questionary questionary) {
     List<Question> questions = questionary.getQuestions();
+    List<MemberDTO> memberDTOS = questionary.getMembers().stream().map(memberDTOFactory::create).toList();
 
     QuestionaryOptionsDTO questionaryOptionsDTO = new QuestionaryOptionsDTO(
         questionary.getStartDate(),
         questionary.getEndDate(),
-        questionary.getAnswersLimit()
+        questionary.getAnswersLimit(),
+        memberDTOS
     );
 
     List<QuestionDTO> questionDTOS = questions.stream().map(questionDTOFactory::create).toList();

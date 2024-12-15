@@ -12,14 +12,9 @@ public record QuestionDTO(
     UUID id,
     QuestionType type,
     String text,
-    @Nullable List<String> options,
-    @Nullable MemberDTO member
+    @Nullable List<String> options
 ) {
   public QuestionDTO(UUID id, QuestionType type, String text) {
-    this(id, type, text, null, null);
-  }
-
-  public QuestionDTO(UUID id, QuestionType type, String text, List<String> options) {
-    this(id, type, text, options, null);
+    this(id, type, text, null);
   }
 }

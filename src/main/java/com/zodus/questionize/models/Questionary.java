@@ -43,4 +43,12 @@ public class Questionary {
 
   @OneToMany(mappedBy = "questionary", cascade = CascadeType.ALL)
   private List<Submission> submissions;
+
+  @ManyToMany(cascade = CascadeType.ALL)
+  @JoinTable(
+      name = "questionary_members_like",
+      joinColumns = @JoinColumn(name = "questionaryId"),
+      inverseJoinColumns = @JoinColumn(name = "memberId")
+  )
+  private List<Member> members;
 }
