@@ -1,5 +1,6 @@
 package com.zodus.questionize.models;
 
+import com.zodus.questionize.customuuid.CustomUUID;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -18,7 +19,7 @@ import java.util.UUID;
 @NoArgsConstructor
 public class Administrator implements UserDetails {
   @Id
-  @GeneratedValue(strategy = GenerationType.UUID)
+  @CustomUUID
   private UUID id;
 
   @Column(nullable = false)

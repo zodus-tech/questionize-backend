@@ -1,5 +1,6 @@
 package com.zodus.questionize.models;
 
+import com.zodus.questionize.customuuid.CustomUUID;
 import com.zodus.questionize.models.questions.Question;
 import jakarta.persistence.*;
 import lombok.*;
@@ -17,7 +18,7 @@ import java.util.UUID;
 @NoArgsConstructor
 public class Questionary {
   @Id
-  @GeneratedValue(strategy = GenerationType.UUID)
+  @CustomUUID
   private UUID id;
 
   @Column(nullable = false)

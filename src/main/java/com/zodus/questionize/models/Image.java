@@ -1,5 +1,6 @@
 package com.zodus.questionize.models;
 
+import com.zodus.questionize.customuuid.CustomUUID;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -14,7 +15,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class Image {
   @Id
-  @GeneratedValue(strategy = GenerationType.UUID)
+  @CustomUUID
   private UUID id;
 
   private String name;

@@ -1,5 +1,6 @@
 package com.zodus.questionize.models.questions;
 
+import com.zodus.questionize.customuuid.CustomUUID;
 import com.zodus.questionize.models.Answer;
 import com.zodus.questionize.models.Questionary;
 import com.zodus.questionize.models.Statistics;
@@ -17,7 +18,7 @@ import java.util.UUID;
 @NoArgsConstructor
 public class Question {
   @Id
-  @GeneratedValue(strategy = GenerationType.UUID)
+  @CustomUUID
   protected UUID id;
 
   protected String text;

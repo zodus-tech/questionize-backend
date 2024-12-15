@@ -1,5 +1,6 @@
 package com.zodus.questionize.models;
 
+import com.zodus.questionize.customuuid.CustomUUID;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -13,7 +14,7 @@ import java.util.*;
 @AllArgsConstructor
 public class Department {
   @Id
-  @GeneratedValue(strategy = GenerationType.UUID)
+  @CustomUUID
   private UUID id;
 
   @Column(unique = true)
