@@ -10,6 +10,6 @@ import org.springframework.stereotype.Component;
 public class RatingQuestionDTOFactory {
 
   public QuestionDTO create(RatingQuestion question) {
-    return new QuestionDTO(question.getId(),  question.getType(), question.getText(), question.getOptions());
+    return new QuestionDTO(question.getId(),  question.getType(), question.getText(), question.getRatings());
   }
 }

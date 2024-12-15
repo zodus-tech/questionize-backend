@@ -16,7 +16,6 @@ public class RatingQuestionFactory {
     ratingQuestion.setText(request.text());
     ratingQuestion.setType(QuestionType.RATING);
     ratingQuestion.setQuestionary(questionary);
-    ratingQuestion.setOptions(request.options());
 
     return ratingQuestion;
   }

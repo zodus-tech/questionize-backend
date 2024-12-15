@@ -2,6 +2,9 @@ package com.zodus.questionize.services;
 
 import com.zodus.questionize.dto.GeneralStatisticsDTO;
 import com.zodus.questionize.dto.filters.GeneralStatisticsFilter;
+import com.zodus.questionize.models.questions.QuestionType;
+import com.zodus.questionize.models.questions.types.enums.Rating;
+import com.zodus.questionize.repositories.AnswerRepository;
 import com.zodus.questionize.repositories.QuestionaryRepository;
 import com.zodus.questionize.repositories.SubmissionRepository;
 import lombok.AllArgsConstructor;
@@ -17,6 +20,7 @@ import java.util.TreeMap;
 public class StatisticsService {
   private final QuestionaryRepository questionaryRepository;
   private final SubmissionRepository submissionRepository;
+  private final AnswerRepository answerRepository;
 
   public GeneralStatisticsDTO getGeneralStatistics(GeneralStatisticsFilter filter) {
     Period period = filter.period();
@@ -27,12 +31,31 @@ public class StatisticsService {
     long totalQuestionnairesActive = questionaryRepository.countByStartDateBeforeAndEndDateAfter(now.atStartOfDay(), now.atStartOfDay());
     long totalSubmissions = submissionRepository.countBySubmittedAtBetween(from.atStartOfDay(), to.atStartOfDay());
     Map<String, Long> statisticsPerPeriod = getStatisticsPerPeriod(period, from, to);
+    Map<Rating, Long> satisfactionDistribution = getSatisfactionDistribution();
 
     return new GeneralStatisticsDTO(
         totalQuestionnairesActive,
         totalSubmissions,
-        statisticsPerPeriod
+        statisticsPerPeriod,
+        satisfactionDistribution
     );
+  }
+
+  private Map<Rating, Long> getSatisfactionDistribution() {
+    long veryDissatisfied = answerRepository.countAllByQuestionTypeAndAnswer(QuestionType.RATING, Rating.VERY_DISSATISFIED.toString());
+    long dissatisfied = answerRepository.countAllByQuestionTypeAndAnswer(QuestionType.RATING, Rating.DISSATISFIED.toString());
+    long neutral = answerRepository.countAllByQuestionTypeAndAnswer(QuestionType.RATING, Rating.NEUTRAL.toString());
+    long satisfactory = answerRepository.countAllByQuestionTypeAndAnswer(QuestionType.RATING, Rating.SATISFACTORY.toString());
+    long verySatisfactory = answerRepository.countAllByQuestionTypeAndAnswer(QuestionType.RATING, Rating.VERY_SATISFACTORY.toString());
+
+    Map<Rating, Long> response = new TreeMap<>();
+    response.put(Rating.VERY_DISSATISFIED, veryDissatisfied);
+    response.put(Rating.DISSATISFIED, dissatisfied);
+    response.put(Rating.NEUTRAL, neutral);
+    response.put(Rating.SATISFACTORY, satisfactory);
+    response.put(Rating.VERY_SATISFACTORY, verySatisfactory);
+
+    return response;
   }
 
   private Map<String, Long> getStatisticsPerPeriod(Period period, LocalDate from, LocalDate to) {
