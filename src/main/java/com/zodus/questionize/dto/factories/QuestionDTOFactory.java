@@ -7,13 +7,21 @@ import com.zodus.questionize.dto.factories.questions.RatingQuestionDTOFactory;
 import com.zodus.questionize.models.questions.Question;
 import com.zodus.questionize.models.questions.types.MultipleChoiceQuestion;
 import com.zodus.questionize.models.questions.types.RatingQuestion;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Component;
 
+@AllArgsConstructor
+@Component
 public class QuestionDTOFactory {
-  public static QuestionDTO create(Question question) {
+  private final DefaultQuestionDTOFactory defaultQuestionDTOFactory;
+  private final MultipleChoiceQuestionDTOFactory multipleChoiceQuestionDTOFactory;
+  private final RatingQuestionDTOFactory ratingQuestionDTOFactory;
+
+  public QuestionDTO create(Question question) {
     return switch (question.getType()) {
-      case BOOLEAN, TEXT -> DefaultQuestionDTOFactory.create(question);
-      case MULTIPLE_CHOICE -> MultipleChoiceQuestionDTOFactory.create((MultipleChoiceQuestion) question);
-      case RATING -> RatingQuestionDTOFactory.create((RatingQuestion) question);
+      case BOOLEAN, TEXT -> defaultQuestionDTOFactory.create(question);
+      case MULTIPLE_CHOICE -> multipleChoiceQuestionDTOFactory.create((MultipleChoiceQuestion) question);
+      case RATING -> ratingQuestionDTOFactory.create((RatingQuestion) question);
     };
   }
 }

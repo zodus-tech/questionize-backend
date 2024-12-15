@@ -5,7 +5,6 @@ import jakarta.annotation.Nullable;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 
 public record QuestionaryDTO(

@@ -22,12 +22,13 @@ import java.util.UUID;
 @AllArgsConstructor
 public class QuestionaryController {
   private final QuestionaryService questionaryService;
+  private final QuestionaryDTOFactory questionaryDTOFactory;
 
   @PostMapping("/create")
   public ResponseEntity<QuestionaryDTO> createQuestionary(@RequestBody CreateQuestionaryRequest request) {
     Questionary questionary = questionaryService.createQuestionary(request);
 
-    QuestionaryDTO response = QuestionaryDTOFactory.create(questionary);
+    QuestionaryDTO response = questionaryDTOFactory.create(questionary);
     return new ResponseEntity<>(response, HttpStatus.CREATED);
   }
 
@@ -35,7 +36,7 @@ public class QuestionaryController {
   public ResponseEntity<QuestionaryDTO> getQuestionaryById(@PathVariable UUID id) {
     Questionary questionary = questionaryService.getQuestionaryById(id);
 
-    QuestionaryDTO response = QuestionaryDTOFactory.create(questionary);
+    QuestionaryDTO response = questionaryDTOFactory.create(questionary);
     return new ResponseEntity<>(response, HttpStatus.OK);
   }
 
@@ -43,7 +44,7 @@ public class QuestionaryController {
   public ResponseEntity<PagedModel<QuestionaryDTO>> getQuestionaries(Pageable pageable) {
     Page<Questionary> questionaryPage = questionaryService.getAllQuestionaries(pageable);
     List<QuestionaryDTO> questionaryDTOS = questionaryPage.getContent().stream().map(
-        QuestionaryDTOFactory::create
+        questionaryDTOFactory::create
     ).toList();
     Page<QuestionaryDTO> questionaryDTOPage = new PageImpl<>(questionaryDTOS, pageable, questionaryPage.getTotalElements());
 

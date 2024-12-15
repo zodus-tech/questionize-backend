@@ -13,7 +13,7 @@ public record QuestionDTO(
     QuestionType type,
     String text,
     @Nullable List<String> options,
-    @Nullable UUID memberId
+    @Nullable MemberDTO member
 ) {
   public QuestionDTO(UUID id, QuestionType type, String text) {
     this(id, type, text, null, null);

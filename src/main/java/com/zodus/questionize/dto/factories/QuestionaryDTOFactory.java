@@ -16,8 +16,9 @@ import java.util.UUID;
 @Component
 @AllArgsConstructor
 public class QuestionaryDTOFactory {
+  private final QuestionDTOFactory questionDTOFactory;
 
-  public static QuestionaryDTO create(Questionary questionary) {
+  public QuestionaryDTO create(Questionary questionary) {
     List<Question> questions = questionary.getQuestions();
 
     QuestionaryOptionsDTO questionaryOptionsDTO = new QuestionaryOptionsDTO(
@@ -26,7 +27,7 @@ public class QuestionaryDTOFactory {
         questionary.getAnswersLimit()
     );
 
-    List<QuestionDTO> questionDTOS = questions.stream().map(QuestionDTOFactory::create).toList();
+    List<QuestionDTO> questionDTOS = questions.stream().map(questionDTOFactory::create).toList();
 
     Optional<Image> banner = Optional.ofNullable(questionary.getBanner());
     UUID bannerId = banner.map(Image::getId).orElse(null);
