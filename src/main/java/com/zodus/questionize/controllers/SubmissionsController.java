@@ -23,8 +23,8 @@ public class SubmissionsController {
   private final SubmissionDTOFactory submissionDTOFactory;
 
   @PostMapping("/submit")
-  public ResponseEntity<SubmissionDTO> submit(@RequestBody SubmitRequest request, @PathVariable UUID questionaryId) {
-    Submission submission = submissionsService.submit(request, questionaryId);
+  public ResponseEntity<SubmissionDTO> submit(@RequestBody SubmitRequest request, @PathVariable UUID questionaryId, @RequestParam UUID submissionToken) {
+    Submission submission = submissionsService.submit(request, questionaryId, submissionToken);
     SubmissionDTO response = submissionDTOFactory.create(submission);
 
     return new ResponseEntity<>(response, HttpStatus.OK);

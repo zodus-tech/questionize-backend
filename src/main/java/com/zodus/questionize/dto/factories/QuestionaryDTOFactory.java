@@ -20,7 +20,7 @@ public class QuestionaryDTOFactory {
   private final QuestionDTOFactory questionDTOFactory;
   private final MemberDTOFactory memberDTOFactory;
 
-  public QuestionaryDTO create(Questionary questionary) {
+  public QuestionaryDTO create(Questionary questionary, UUID submissionToken) {
     List<Question> questions = questionary.getQuestions();
     List<MemberDTO> memberDTOS = questionary.getMembers().stream().map(memberDTOFactory::create).toList();
 
@@ -42,7 +42,12 @@ public class QuestionaryDTOFactory {
         questionary.getCreatedAt(),
         questionaryOptionsDTO,
         questionDTOS,
-        bannerId
+        bannerId,
+        submissionToken
     );
+  }
+
+  public QuestionaryDTO create(Questionary questionary) {
+    return create(questionary, null);
   }
 }

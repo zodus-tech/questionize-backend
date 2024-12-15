@@ -8,6 +8,7 @@ public record GeneralStatisticsDTO(
     long totalQuestionnairesActive,
     long totalSubmissions,
     Map<String, Long> totalSubmissionsPerPeriod,
-    Map<Rating, Long> satisfactionDistribution
+    Map<Rating, Long> satisfactionDistribution,
+    long unfinishedSubmissions
 ) {
 }

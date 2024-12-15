@@ -21,6 +21,7 @@ public class StatisticsService {
   private final QuestionaryRepository questionaryRepository;
   private final SubmissionRepository submissionRepository;
   private final AnswerRepository answerRepository;
+  private final SubmissionTokenService submissionTokenService;
 
   public GeneralStatisticsDTO getGeneralStatistics(GeneralStatisticsFilter filter) {
     Period period = filter.period();
@@ -32,12 +33,14 @@ public class StatisticsService {
     long totalSubmissions = submissionRepository.countBySubmittedAtBetween(from.atStartOfDay(), to.atStartOfDay());
     Map<String, Long> statisticsPerPeriod = getStatisticsPerPeriod(period, from, to);
     Map<Rating, Long> satisfactionDistribution = getSatisfactionDistribution();
+    long unfinishedSubmissions = submissionTokenService.countTotal();
 
     return new GeneralStatisticsDTO(
         totalQuestionnairesActive,
         totalSubmissions,
         statisticsPerPeriod,
-        satisfactionDistribution
+        satisfactionDistribution,
+        unfinishedSubmissions
     );
   }
 

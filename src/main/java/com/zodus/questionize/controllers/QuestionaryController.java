@@ -4,7 +4,9 @@ import com.zodus.questionize.dto.QuestionaryDTO;
 import com.zodus.questionize.dto.factories.QuestionaryDTOFactory;
 import com.zodus.questionize.dto.requests.questionary.createQuestionary.CreateQuestionaryRequest;
 import com.zodus.questionize.models.Questionary;
+import com.zodus.questionize.models.SubmissionToken;
 import com.zodus.questionize.services.QuestionaryService;
+import com.zodus.questionize.services.SubmissionTokenService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -23,6 +25,7 @@ import java.util.UUID;
 public class QuestionaryController {
   private final QuestionaryService questionaryService;
   private final QuestionaryDTOFactory questionaryDTOFactory;
+  private final SubmissionTokenService submissionTokenService;
 
   @PostMapping("/create")
   public ResponseEntity<QuestionaryDTO> createQuestionary(@RequestBody CreateQuestionaryRequest request) {
@@ -34,6 +37,15 @@ public class QuestionaryController {
 
   @GetMapping("/{id}")
   public ResponseEntity<QuestionaryDTO> getQuestionaryById(@PathVariable UUID id) {
+    Questionary questionary = questionaryService.getQuestionaryById(id);
+    UUID submissionToken = submissionTokenService.generate().getId();
+
+    QuestionaryDTO response = questionaryDTOFactory.create(questionary, submissionToken);
+    return new ResponseEntity<>(response, HttpStatus.OK);
+  }
+
+  @GetMapping("/admin/{id}")
+  public ResponseEntity<QuestionaryDTO> getQuestionaryByIdAsAdmin(@PathVariable UUID id) {
     Questionary questionary = questionaryService.getQuestionaryById(id);
 
     QuestionaryDTO response = questionaryDTOFactory.create(questionary);

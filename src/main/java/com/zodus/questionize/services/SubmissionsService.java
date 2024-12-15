@@ -25,8 +25,9 @@ public class SubmissionsService {
   private final SubmissionRepository submissionRepository;
   private final QuestionaryService questionaryService;
   private final QuestionRepository questionRepository;
+  private final SubmissionTokenService submissionTokenService;
 
-  public Submission submit(SubmitRequest request, UUID questionaryId) throws ResponseStatusException {
+  public Submission submit(SubmitRequest request, UUID questionaryId, UUID submissionToken) throws ResponseStatusException {
     LocalDateTime submittedAt = LocalDateTime.now();
     Questionary questionary = questionaryService.getQuestionaryById(questionaryId);
 
@@ -49,6 +50,7 @@ public class SubmissionsService {
 
     submission.setAnswers(answers);
 
+    submissionTokenService.findAndDelete(submissionToken);
     return submissionRepository.save(submission);
   }
 
