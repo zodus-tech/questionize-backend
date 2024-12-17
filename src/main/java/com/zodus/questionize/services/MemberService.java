@@ -1,6 +1,6 @@
 package com.zodus.questionize.services;
 
-import com.zodus.questionize.dto.requests.createMember.MemberRequest;
+import com.zodus.questionize.dto.requests.createmember.MemberRequest;
 import com.zodus.questionize.models.Department;
 import com.zodus.questionize.models.Member;
 import com.zodus.questionize.repositories.MemberRepository;
@@ -63,5 +63,9 @@ public class MemberService {
     long size = memberRepository.countByDepartment(department);
 
     return new PageImpl<>(memberPage.getContent(), pageable, size);
+  }
+
+  public void saveMember(Member member) {
+    memberRepository.save(member);
   }
 }

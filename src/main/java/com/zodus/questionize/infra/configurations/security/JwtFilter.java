@@ -1,4 +1,4 @@
-package com.zodus.questionize.configurations.security;
+package com.zodus.questionize.infra.configurations.security;
 
 import com.zodus.questionize.models.Administrator;
 import com.zodus.questionize.repositories.AdministratorRepository;

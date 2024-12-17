@@ -1,9 +1,7 @@
 package com.zodus.questionize.services;
 
-import com.zodus.questionize.dto.requests.createDepartment.DepartmentRequest;
-import com.zodus.questionize.models.Administrator;
+import com.zodus.questionize.dto.requests.createdepartment.DepartmentRequest;
 import com.zodus.questionize.models.Department;
-import com.zodus.questionize.models.Questionary;
 import com.zodus.questionize.repositories.DepartmentRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;

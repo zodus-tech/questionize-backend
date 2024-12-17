@@ -1,4 +1,4 @@
-package com.zodus.questionize.configurations.security;
+package com.zodus.questionize.infra.configurations.security;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
