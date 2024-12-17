@@ -26,7 +26,11 @@ public class Submission {
   @OneToMany(mappedBy = "submission", cascade = CascadeType.ALL)
   private List<Answer> answers;
 
-  @ManyToOne
+  @ManyToOne(cascade = CascadeType.ALL)
   @JoinColumn(name = "questionaryId", nullable = false)
   private Questionary questionary;
+
+  @ManyToOne(cascade = CascadeType.ALL)
+  @JoinColumn(name = "memberId", nullable = false)
+  private Member member;
 }

@@ -2,6 +2,7 @@ package com.zodus.questionize.services;
 
 import com.zodus.questionize.dto.requests.questionary.submission.SubmitRequest;
 import com.zodus.questionize.models.Answer;
+import com.zodus.questionize.models.Member;
 import com.zodus.questionize.models.questions.Question;
 import com.zodus.questionize.models.Questionary;
 import com.zodus.questionize.models.Submission;
@@ -25,15 +26,18 @@ public class SubmissionsService {
   private final SubmissionRepository submissionRepository;
   private final QuestionaryService questionaryService;
   private final QuestionRepository questionRepository;
+  private final MemberService memberService;
   private final SubmissionTokenService submissionTokenService;
 
   public Submission submit(SubmitRequest request, UUID questionaryId, UUID submissionToken) throws ResponseStatusException {
     LocalDateTime submittedAt = LocalDateTime.now();
     Questionary questionary = questionaryService.getQuestionaryById(questionaryId);
+    Member member = memberService.getMemberById(request.memberId());
 
     Submission submission = Submission.builder()
         .submittedAt(submittedAt)
         .questionary(questionary)
+        .member(member)
         .build();
 
     List<Answer> answers = request.answers().stream().map(

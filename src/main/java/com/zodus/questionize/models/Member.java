@@ -26,10 +26,13 @@ public class Member {
   @JoinColumn(name = "imageId")
   private Image picture;
 
-  @ManyToOne
+  @ManyToOne(cascade = CascadeType.ALL)
   @JoinColumn(name = "departmentId")
   private Department department;
 
   @ManyToMany(mappedBy = "members", cascade = CascadeType.ALL)
   private List<Questionary> questionnaires;
+
+  @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+  private List<Submission> submissions;
 }

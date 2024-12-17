@@ -11,6 +11,7 @@ public record SubmissionDTO(
     String title,
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     LocalDateTime submittedAt,
-    List<AnswerDTO> answers
+    List<AnswerDTO> answers,
+    MemberDTO memberId
 ) {
 }

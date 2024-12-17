@@ -1,7 +1,9 @@
 package com.zodus.questionize.dto.factories;
 
 import com.zodus.questionize.dto.AnswerDTO;
+import com.zodus.questionize.dto.MemberDTO;
 import com.zodus.questionize.dto.SubmissionDTO;
+import com.zodus.questionize.models.Member;
 import com.zodus.questionize.models.Questionary;
 import com.zodus.questionize.models.Submission;
 import lombok.AllArgsConstructor;
@@ -17,16 +19,20 @@ import java.util.List;
 @AllArgsConstructor
 public class SubmissionDTOFactory {
   private final AnswerDTOFactory answerDTOFactory;
+  private final MemberDTOFactory memberDTOFactory;
 
   public SubmissionDTO create(Submission submission) {
     List<AnswerDTO> answerDTOS = answerDTOFactory.create(submission.getAnswers().stream().toList());
     Questionary questionary = submission.getQuestionary();
+    Member member = submission.getMember();
+    MemberDTO memberDTO = memberDTOFactory.create(member);
 
     return new SubmissionDTO(
         submission.getId(),
         questionary.getTitle(),
         submission.getSubmittedAt(),
-        answerDTOS
+        answerDTOS,
+        memberDTO
     );
   }
 
