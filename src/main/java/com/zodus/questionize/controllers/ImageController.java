@@ -2,7 +2,7 @@ package com.zodus.questionize.controllers;
 
 import com.zodus.questionize.dto.ImageDTO;
 import com.zodus.questionize.dto.factories.ImageDTOFactory;
-import com.zodus.questionize.dto.requests.saveImage.SaveImageRequest;
+import com.zodus.questionize.dto.requests.saveimage.SaveImageRequest;
 import com.zodus.questionize.models.Image;
 import com.zodus.questionize.services.ImageService;
 import lombok.AllArgsConstructor;

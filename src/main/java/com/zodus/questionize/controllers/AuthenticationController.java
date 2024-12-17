@@ -4,7 +4,7 @@ import com.zodus.questionize.dto.AdministratorDTO;
 import com.zodus.questionize.dto.AuthenticationDTO;
 import com.zodus.questionize.dto.factories.AdministratorDTOFactory;
 import com.zodus.questionize.dto.requests.authentication.AuthenticationRequest;
-import com.zodus.questionize.dto.requests.createAdministrator.CreateAdministratorRequest;
+import com.zodus.questionize.dto.requests.createadministrator.CreateAdministratorRequest;
 import com.zodus.questionize.models.Administrator;
 import com.zodus.questionize.services.AdministratorService;
 import com.zodus.questionize.services.AuthenticationService;

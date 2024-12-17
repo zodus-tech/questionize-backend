@@ -1,4 +1,4 @@
-package com.zodus.questionize.dto.requests.createMember;
+package com.zodus.questionize.dto.requests.createmember;
 
 import jakarta.annotation.Nullable;
 

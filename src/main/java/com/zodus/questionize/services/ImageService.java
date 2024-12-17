@@ -1,6 +1,6 @@
 package com.zodus.questionize.services;
 
-import com.zodus.questionize.dto.requests.saveImage.SaveImageRequest;
+import com.zodus.questionize.dto.requests.saveimage.SaveImageRequest;
 import com.zodus.questionize.models.Image;
 import com.zodus.questionize.models.Member;
 import com.zodus.questionize.models.Questionary;

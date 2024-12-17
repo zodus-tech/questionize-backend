@@ -1,6 +1,6 @@
 package com.zodus.questionize.services;
 
-import com.zodus.questionize.dto.requests.createAdministrator.CreateAdministratorRequest;
+import com.zodus.questionize.dto.requests.createadministrator.CreateAdministratorRequest;
 import com.zodus.questionize.models.Administrator;
 import com.zodus.questionize.models.Department;
 import com.zodus.questionize.repositories.AdministratorRepository;

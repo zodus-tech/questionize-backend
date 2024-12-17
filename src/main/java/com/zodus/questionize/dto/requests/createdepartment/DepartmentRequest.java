@@ -1,4 +1,4 @@
-package com.zodus.questionize.dto.requests.createDepartment;
+package com.zodus.questionize.dto.requests.createdepartment;
 
 import jakarta.annotation.Nullable;
 

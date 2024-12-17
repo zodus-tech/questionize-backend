@@ -1,4 +1,4 @@
-package com.zodus.questionize.dto.requests.createAdministrator;
+package com.zodus.questionize.dto.requests.createadministrator;
 
 import java.util.UUID;
 
