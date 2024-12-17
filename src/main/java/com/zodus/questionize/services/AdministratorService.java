@@ -37,4 +37,8 @@ public class AdministratorService implements UserDetailsService {
 
     return administratorRepository.save(administrator);
   }
+
+  public Administrator findByUsername(String username) {
+    return loadUserByUsername(username);
+  }
 }

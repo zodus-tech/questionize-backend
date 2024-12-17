@@ -64,4 +64,8 @@ public class MemberService {
 
     return new PageImpl<>(memberPage.getContent(), pageable, size);
   }
+
+  public void saveMember(Member member) {
+    memberRepository.save(member);
+  }
 }
