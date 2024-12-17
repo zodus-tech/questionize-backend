@@ -20,7 +20,7 @@ public class Department {
   @Column(unique = true)
   private String name;
 
-  @OneToMany(mappedBy = "department", cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "department")
   private List<Administrator> administrators = new ArrayList<>();
 
   @OneToMany(mappedBy = "department", cascade = CascadeType.ALL)

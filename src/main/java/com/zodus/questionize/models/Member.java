@@ -33,6 +33,6 @@ public class Member {
   @ManyToMany(mappedBy = "members")
   private List<Questionary> questionnaires;
 
-  @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "member")
   private List<Submission> submissions;
 }

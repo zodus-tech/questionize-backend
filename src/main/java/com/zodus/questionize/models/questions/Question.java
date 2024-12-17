@@ -23,7 +23,7 @@ public class Question {
 
   protected String text;
 
-  @ManyToOne(cascade = CascadeType.ALL)
+  @ManyToOne
   @JoinColumn(name = "questionaryId")
   protected Questionary questionary;
 
