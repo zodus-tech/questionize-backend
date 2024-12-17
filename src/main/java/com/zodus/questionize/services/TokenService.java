@@ -5,7 +5,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.zodus.questionize.configurations.security.JwtProperties;
+import com.zodus.questionize.infra.configurations.security.JwtProperties;
 import com.zodus.questionize.models.Administrator;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;

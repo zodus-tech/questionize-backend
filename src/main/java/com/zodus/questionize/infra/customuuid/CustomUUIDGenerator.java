@@ -1,4 +1,4 @@
-package com.zodus.questionize.customuuid;
+package com.zodus.questionize.infra.customuuid;
 
 import com.github.f4b6a3.uuid.UuidCreator;
 import org.hibernate.engine.spi.SharedSessionContractImplementor;

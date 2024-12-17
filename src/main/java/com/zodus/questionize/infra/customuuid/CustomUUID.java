@@ -1,4 +1,4 @@
-package com.zodus.questionize.customuuid;
+package com.zodus.questionize.infra.customuuid;
 
 import org.hibernate.annotations.IdGeneratorType;
 

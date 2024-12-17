@@ -1,4 +1,4 @@
-package com.zodus.questionize.configurations;
+package com.zodus.questionize.infra.configurations;
 
 import com.zodus.questionize.QuestionizeApplication;
 import org.slf4j.Logger;

@@ -1,4 +1,4 @@
-package com.zodus.questionize.configurations.security;
+package com.zodus.questionize.infra.configurations.security;
 
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
