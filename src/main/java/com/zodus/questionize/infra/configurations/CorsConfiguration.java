@@ -1,4 +1,4 @@
-package com.zodus.questionize.configurations;
+package com.zodus.questionize.infra.configurations;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;

@@ -1,6 +1,6 @@
 package com.zodus.questionize.models;
 
-import com.zodus.questionize.customuuid.CustomUUID;
+import com.zodus.questionize.infra.customuuid.CustomUUID;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;

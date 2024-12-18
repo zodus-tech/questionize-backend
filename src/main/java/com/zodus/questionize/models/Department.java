@@ -1,6 +1,6 @@
 package com.zodus.questionize.models;
 
-import com.zodus.questionize.customuuid.CustomUUID;
+import com.zodus.questionize.infra.customuuid.CustomUUID;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -20,7 +20,7 @@ public class Department {
   @Column(unique = true)
   private String name;
 
-  @OneToMany(mappedBy = "department", cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "department")
   private List<Administrator> administrators = new ArrayList<>();
 
   @OneToMany(mappedBy = "department", cascade = CascadeType.ALL)

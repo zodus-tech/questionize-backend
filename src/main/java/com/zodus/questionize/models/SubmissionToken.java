@@ -1,6 +1,6 @@
 package com.zodus.questionize.models;
 
-import com.zodus.questionize.customuuid.CustomUUID;
+import com.zodus.questionize.infra.customuuid.CustomUUID;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.Getter;

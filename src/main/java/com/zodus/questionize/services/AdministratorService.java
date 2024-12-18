@@ -1,6 +1,6 @@
 package com.zodus.questionize.services;
 
-import com.zodus.questionize.dto.requests.createAdministrator.CreateAdministratorRequest;
+import com.zodus.questionize.dto.requests.createadministrator.CreateAdministratorRequest;
 import com.zodus.questionize.models.Administrator;
 import com.zodus.questionize.models.Department;
 import com.zodus.questionize.repositories.AdministratorRepository;
@@ -36,5 +36,9 @@ public class AdministratorService implements UserDetailsService {
         .build();
 
     return administratorRepository.save(administrator);
+  }
+
+  public Administrator findByUsername(String username) {
+    return loadUserByUsername(username);
   }
 }

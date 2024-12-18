@@ -60,4 +60,12 @@ public class QuestionaryService {
 
     questionaryRepository.deleteById(id);
   }
+
+  public long countAllBetween(LocalDateTime from, LocalDateTime to) {
+    return questionaryRepository.countByStartDateBeforeAndEndDateAfter(from, to);
+  }
+
+  public void saveQuestionary(Questionary questionary) {
+    questionaryRepository.save(questionary);
+  }
 }

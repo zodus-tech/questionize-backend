@@ -1,6 +1,6 @@
 package com.zodus.questionize.services;
 
-import com.zodus.questionize.dto.requests.saveImage.SaveImageRequest;
+import com.zodus.questionize.dto.requests.saveimage.SaveImageRequest;
 import com.zodus.questionize.models.Image;
 import com.zodus.questionize.models.Member;
 import com.zodus.questionize.models.Questionary;
@@ -23,8 +23,6 @@ public class ImageService {
   private final static Base64.Encoder ENCODER = Base64.getEncoder();
   private final static Base64.Decoder DECODER = Base64.getDecoder();
   private final ImageRepository imageRepository;
-  private final QuestionaryRepository questionaryRepository;
-  private final MemberRepository memberRepository;
   private final QuestionaryService questionaryService;
   private final MemberService memberService;
 
@@ -39,13 +37,13 @@ public class ImageService {
       Member member = memberService.getMemberById(request.memberId().get());
       image.setMember(member);
       member.setPicture(image);
-      memberRepository.save(member);
+      memberService.saveMember(member);
     }
     if (request.questionaryId().isPresent()) {
       Questionary questionary = questionaryService.getQuestionaryById(request.questionaryId().get());
       image.setQuestionary(questionary);
       questionary.setBanner(image);
-      questionaryRepository.save(questionary);
+      questionaryService.saveQuestionary(questionary);
     }
 
     return imageRepository.save(image);

@@ -2,7 +2,7 @@ package com.zodus.questionize.controllers;
 
 import com.zodus.questionize.dto.MemberDTO;
 import com.zodus.questionize.dto.factories.MemberDTOFactory;
-import com.zodus.questionize.dto.requests.createMember.MemberRequest;
+import com.zodus.questionize.dto.requests.createmember.MemberRequest;
 import com.zodus.questionize.models.Department;
 import com.zodus.questionize.models.Member;
 import com.zodus.questionize.services.DepartmentService;

@@ -1,6 +1,6 @@
 package com.zodus.questionize.models;
 
-import com.zodus.questionize.customuuid.CustomUUID;
+import com.zodus.questionize.infra.customuuid.CustomUUID;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -26,13 +26,13 @@ public class Member {
   @JoinColumn(name = "imageId")
   private Image picture;
 
-  @ManyToOne(cascade = CascadeType.ALL)
+  @ManyToOne
   @JoinColumn(name = "departmentId")
   private Department department;
 
-  @ManyToMany(mappedBy = "members", cascade = CascadeType.ALL)
+  @ManyToMany(mappedBy = "members")
   private List<Questionary> questionnaires;
 
-  @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "member")
   private List<Submission> submissions;
 }

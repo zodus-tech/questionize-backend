@@ -2,7 +2,7 @@ package com.zodus.questionize.controllers;
 
 import com.zodus.questionize.dto.DepartmentDTO;
 import com.zodus.questionize.dto.factories.DepartmentDTOFactory;
-import com.zodus.questionize.dto.requests.createDepartment.DepartmentRequest;
+import com.zodus.questionize.dto.requests.createdepartment.DepartmentRequest;
 import com.zodus.questionize.models.Department;
 import com.zodus.questionize.services.DepartmentService;
 import lombok.AllArgsConstructor;

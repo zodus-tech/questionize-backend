@@ -1,6 +1,6 @@
 package com.zodus.questionize.models;
 
-import com.zodus.questionize.customuuid.CustomUUID;
+import com.zodus.questionize.infra.customuuid.CustomUUID;
 import com.zodus.questionize.models.questions.Question;
 import jakarta.persistence.*;
 import lombok.*;
@@ -45,7 +45,7 @@ public class Questionary {
   @OneToMany(mappedBy = "questionary", cascade = CascadeType.ALL)
   private List<Submission> submissions;
 
-  @ManyToMany(cascade = CascadeType.ALL)
+  @ManyToMany
   @JoinTable(
       name = "questionary_members_like",
       joinColumns = @JoinColumn(name = "questionaryId"),

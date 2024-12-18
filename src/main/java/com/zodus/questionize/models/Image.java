@@ -1,6 +1,6 @@
 package com.zodus.questionize.models;
 
-import com.zodus.questionize.customuuid.CustomUUID;
+import com.zodus.questionize.infra.customuuid.CustomUUID;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -25,9 +25,9 @@ public class Image {
   @Column(columnDefinition = "MEDIUMBLOB")
   private String imageData;
 
-  @OneToOne(mappedBy = "picture", cascade = CascadeType.ALL)
+  @OneToOne(mappedBy = "picture")
   private Member member;
 
-  @OneToOne(mappedBy = "banner", cascade = CascadeType.ALL)
+  @OneToOne(mappedBy = "banner")
   private Questionary questionary;
 }

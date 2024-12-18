@@ -5,9 +5,8 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.zodus.questionize.configurations.security.JwtProperties;
+import com.zodus.questionize.infra.configurations.security.JwtProperties;
 import com.zodus.questionize.models.Administrator;
-import com.zodus.questionize.repositories.AdministratorRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -19,7 +18,7 @@ import java.time.ZoneOffset;
 @Service
 @AllArgsConstructor
 public class TokenService {
-  private final AdministratorRepository administratorRepository;
+  private final AdministratorService administratorService;
   private final String AMERICA_SAO_PAULO_OFFSET = "-03:00";
   private final JwtProperties jwtProperties;
   private final static String issuer = "Questionize";
@@ -46,7 +45,7 @@ public class TokenService {
   public Administrator extractUser(String bearerToken) {
     String token = extractJWTToken(bearerToken);
     String subject = extractSubject(token);
-    return administratorRepository.findByUsername(subject).orElseThrow();
+    return administratorService.findByUsername(subject);
   }
 
   public String extractSubject(String token) {

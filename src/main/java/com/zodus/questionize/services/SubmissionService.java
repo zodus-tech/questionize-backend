@@ -6,7 +6,6 @@ import com.zodus.questionize.models.Member;
 import com.zodus.questionize.models.questions.Question;
 import com.zodus.questionize.models.Questionary;
 import com.zodus.questionize.models.Submission;
-import com.zodus.questionize.repositories.QuestionRepository;
 import com.zodus.questionize.repositories.SubmissionRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -16,16 +15,17 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
 @Service
 @AllArgsConstructor
-public class SubmissionsService {
+public class SubmissionService {
   private final SubmissionRepository submissionRepository;
   private final QuestionaryService questionaryService;
-  private final QuestionRepository questionRepository;
+  private final QuestionService questionService;
   private final MemberService memberService;
   private final SubmissionTokenService submissionTokenService;
 
@@ -42,7 +42,7 @@ public class SubmissionsService {
 
     List<Answer> answers = request.answers().stream().map(
         answer -> {
-          Question question = questionRepository.findById(answer.questionId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+          Question question = questionService.findById(answer.questionId());
 
           return Answer.builder()
               .answer(answer.answer())
@@ -67,5 +67,9 @@ public class SubmissionsService {
     long size = submissionRepository.findAllByQuestionaryId(null, questionaryId).getTotalElements();
 
     return new PageImpl<>(submissionPage.getContent(), pageable, size);
+  }
+
+  public long countAllSubmittedBetween(LocalDateTime from, LocalDateTime to) {
+    return submissionRepository.countBySubmittedAtBetween(from, to);
   }
 }

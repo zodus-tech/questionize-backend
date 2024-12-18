@@ -1,4 +1,4 @@
-package com.zodus.questionize.dto.requests.saveImage;
+package com.zodus.questionize.dto.requests.saveimage;
 
 import java.util.Optional;
 import java.util.UUID;

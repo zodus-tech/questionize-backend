@@ -1,6 +1,6 @@
 package com.zodus.questionize.models.questions;
 
-import com.zodus.questionize.customuuid.CustomUUID;
+import com.zodus.questionize.infra.customuuid.CustomUUID;
 import com.zodus.questionize.models.Answer;
 import com.zodus.questionize.models.Questionary;
 import com.zodus.questionize.models.Statistics;
@@ -23,7 +23,7 @@ public class Question {
 
   protected String text;
 
-  @ManyToOne(cascade = CascadeType.ALL)
+  @ManyToOne
   @JoinColumn(name = "questionaryId")
   protected Questionary questionary;
 
