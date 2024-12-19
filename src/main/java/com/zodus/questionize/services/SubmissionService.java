@@ -15,7 +15,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -41,14 +40,18 @@ public class SubmissionService {
         .build();
 
     List<Answer> answers = request.answers().stream().map(
-        answer -> {
-          Question question = questionService.findById(answer.questionId());
-
-          return Answer.builder()
-              .answer(answer.answer())
+        submitAnswerRequest -> {
+          Question question = questionService.findById(submitAnswerRequest.questionId());
+          Answer answer = Answer.builder()
+              .answer(submitAnswerRequest.answer())
               .question(question)
               .submission(submission)
               .build();
+
+          boolean valid = question.getValidator().validate(question, answer);
+          if (!valid) throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+
+          return answer;
         }
     ).toList();
 

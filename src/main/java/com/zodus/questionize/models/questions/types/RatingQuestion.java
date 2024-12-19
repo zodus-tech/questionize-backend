@@ -2,6 +2,7 @@ package com.zodus.questionize.models.questions.types;
 
 import com.zodus.questionize.models.questions.Question;
 import com.zodus.questionize.models.questions.types.enums.Rating;
+import com.zodus.questionize.models.questions.validators.RatingQuestionValidator;
 import jakarta.persistence.Entity;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,4 +20,8 @@ public class RatingQuestion extends Question {
       Rating.SATISFACTORY.toString(),
       Rating.VERY_SATISFACTORY.toString()
   );
+
+  public RatingQuestion() {
+    super(new RatingQuestionValidator());
+  }
 }
