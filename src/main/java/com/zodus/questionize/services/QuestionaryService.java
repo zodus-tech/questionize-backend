@@ -2,11 +2,10 @@ package com.zodus.questionize.services;
 
 import com.zodus.questionize.dto.requests.questionary.createQuestionary.CreateQuestionaryRequest;
 import com.zodus.questionize.models.Member;
-import com.zodus.questionize.models.questions.QuestionFactory;
-import com.zodus.questionize.models.questions.QuestionType;
 import com.zodus.questionize.models.questions.Question;
 import com.zodus.questionize.models.Questionary;
 import com.zodus.questionize.models.questions.types.MultipleChoiceQuestion;
+import com.zodus.questionize.models.questions.types.RatingQuestion;
 import com.zodus.questionize.repositories.QuestionaryRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -23,7 +22,6 @@ import java.util.UUID;
 @AllArgsConstructor
 public class QuestionaryService {
   private final QuestionaryRepository questionaryRepository;
-  private final QuestionFactory questionFactory;
   private final MemberService memberService;
 
   public Questionary createQuestionary(CreateQuestionaryRequest request) {
@@ -39,7 +37,14 @@ public class QuestionaryService {
         .build();
 
     List<Question> questions = request.questions().stream().map(
-        questionDTO -> questionFactory.create(questionDTO, questionary)
+        questionDTO -> {
+          Question question = new Question();
+          switch (questionDTO.type()) {
+            case RATING -> question = new RatingQuestion();
+            case MULTIPLE_CHOICE -> question = new MultipleChoiceQuestion();
+          }
+          return question.getFactory().create(questionDTO, questionary);
+        }
     ).toList();
 
     questionary.setQuestions(questions);

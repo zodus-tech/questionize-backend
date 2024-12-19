@@ -9,8 +9,8 @@ import org.springframework.stereotype.Component;
 
 @AllArgsConstructor
 @Component
-public class RatingQuestionFactory {
-
+public class RatingQuestionFactory implements QuestionFactory {
+  @Override
   public RatingQuestion create(CreateQuestionRequest request, Questionary questionary) {
     RatingQuestion ratingQuestion = new RatingQuestion();
     ratingQuestion.setText(request.text());

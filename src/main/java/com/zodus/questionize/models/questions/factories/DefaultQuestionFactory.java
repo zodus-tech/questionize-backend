@@ -6,12 +6,15 @@ import com.zodus.questionize.models.questions.Question;
 import org.springframework.stereotype.Component;
 
 @Component
-public class DefaultQuestionFactory {
+public class DefaultQuestionFactory implements QuestionFactory {
+
+  @Override
   public Question create(CreateQuestionRequest request, Questionary questionary) {
-    return Question.builder()
-        .text(request.text())
-        .questionary(questionary)
-        .type(request.type())
-        .build();
+    Question question = new Question();
+    question.setText(request.text());
+    question.setQuestionary(questionary);
+    question.setType(request.type());
+
+    return question;
   }
 }

@@ -7,7 +7,8 @@ import com.zodus.questionize.models.questions.types.MultipleChoiceQuestion;
 import org.springframework.stereotype.Component;
 
 @Component
-public class MultipleChoiceQuestionFactory {
+public class MultipleChoiceQuestionFactory implements QuestionFactory {
+  @Override
   public MultipleChoiceQuestion create(CreateQuestionRequest request, Questionary questionary) {
     MultipleChoiceQuestion multipleChoiceQuestion = new MultipleChoiceQuestion();
     multipleChoiceQuestion.setText(request.text());

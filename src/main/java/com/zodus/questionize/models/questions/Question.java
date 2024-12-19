@@ -4,6 +4,8 @@ import com.zodus.questionize.infra.customuuid.CustomUUID;
 import com.zodus.questionize.models.Answer;
 import com.zodus.questionize.models.Questionary;
 import com.zodus.questionize.models.Statistics;
+import com.zodus.questionize.models.questions.factories.DefaultQuestionFactory;
+import com.zodus.questionize.models.questions.factories.QuestionFactory;
 import com.zodus.questionize.models.questions.validators.DefaultQuestionValidator;
 import com.zodus.questionize.models.questions.validators.QuestionValidator;
 import jakarta.persistence.*;
@@ -15,9 +17,7 @@ import java.util.UUID;
 @Entity
 @Getter
 @Setter
-@Builder
 @NoArgsConstructor
-@AllArgsConstructor
 public class Question {
   @Id
   @CustomUUID
@@ -41,7 +41,11 @@ public class Question {
   @Transient
   protected QuestionValidator validator = new DefaultQuestionValidator();
 
-  protected Question(QuestionValidator validator) {
+  @Transient
+  protected QuestionFactory factory = new DefaultQuestionFactory();
+
+  protected Question(QuestionValidator validator, QuestionFactory factory) {
     this.validator = validator;
+    this.factory = factory;
   }
 }

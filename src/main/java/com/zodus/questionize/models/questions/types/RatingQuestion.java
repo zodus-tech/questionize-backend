@@ -1,6 +1,7 @@
 package com.zodus.questionize.models.questions.types;
 
 import com.zodus.questionize.models.questions.Question;
+import com.zodus.questionize.models.questions.factories.RatingQuestionFactory;
 import com.zodus.questionize.models.questions.types.enums.Rating;
 import com.zodus.questionize.models.questions.validators.RatingQuestionValidator;
 import jakarta.persistence.Entity;
@@ -22,6 +23,6 @@ public class RatingQuestion extends Question {
   );
 
   public RatingQuestion() {
-    super(new RatingQuestionValidator());
+    super(new RatingQuestionValidator(), new RatingQuestionFactory());
   }
 }
