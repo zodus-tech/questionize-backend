@@ -6,7 +6,6 @@ import com.zodus.questionize.models.Submission;
 import com.zodus.questionize.models.questions.types.enums.Rating;
 import com.zodus.questionize.repositories.SubmissionRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
