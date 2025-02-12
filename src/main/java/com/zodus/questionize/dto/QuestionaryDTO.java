@@ -19,6 +19,8 @@ public record QuestionaryDTO(
     @Nullable
     UUID imageId,
     @Nullable
-    UUID submissionToken
+    UUID submissionToken,
+    @Nullable
+    UUID departmentId
 ) {
 }

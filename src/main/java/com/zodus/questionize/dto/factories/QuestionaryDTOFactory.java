@@ -4,6 +4,7 @@ import com.zodus.questionize.dto.MemberDTO;
 import com.zodus.questionize.dto.QuestionDTO;
 import com.zodus.questionize.dto.QuestionaryDTO;
 import com.zodus.questionize.dto.QuestionaryOptionsDTO;
+import com.zodus.questionize.models.Department;
 import com.zodus.questionize.models.Image;
 import com.zodus.questionize.models.questions.Question;
 import com.zodus.questionize.models.Questionary;
@@ -36,6 +37,9 @@ public class QuestionaryDTOFactory {
     Optional<Image> banner = Optional.ofNullable(questionary.getBanner());
     UUID bannerId = banner.map(Image::getId).orElse(null);
 
+    Optional<Department> department = Optional.ofNullable(questionary.getDepartment());
+    UUID departmentId = department.map(Department::getId).orElse(null);
+
     return new QuestionaryDTO(
         questionary.getId(),
         questionary.getTitle(),
@@ -43,7 +47,8 @@ public class QuestionaryDTOFactory {
         questionaryOptionsDTO,
         questionDTOS,
         bannerId,
-        submissionToken
+        submissionToken,
+        departmentId
     );
   }
 

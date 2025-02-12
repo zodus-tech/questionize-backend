@@ -2,9 +2,9 @@ package com.zodus.questionize.controllers;
 
 import com.zodus.questionize.dto.QuestionaryDTO;
 import com.zodus.questionize.dto.factories.QuestionaryDTOFactory;
+import com.zodus.questionize.dto.filters.QuestionnairesFilter;
 import com.zodus.questionize.dto.requests.questionary.createQuestionary.CreateQuestionaryRequest;
 import com.zodus.questionize.models.Questionary;
-import com.zodus.questionize.models.SubmissionToken;
 import com.zodus.questionize.services.QuestionaryService;
 import com.zodus.questionize.services.SubmissionTokenService;
 import lombok.AllArgsConstructor;
@@ -53,8 +53,8 @@ public class QuestionaryController {
   }
 
   @GetMapping("/all")
-  public ResponseEntity<PagedModel<QuestionaryDTO>> getQuestionaries(Pageable pageable) {
-    Page<Questionary> questionaryPage = questionaryService.getAllQuestionaries(pageable);
+  public ResponseEntity<PagedModel<QuestionaryDTO>> getQuestionaries(Pageable pageable, QuestionnairesFilter filter) {
+    Page<Questionary> questionaryPage = questionaryService.getAllQuestionnaires(pageable, filter);
     List<QuestionaryDTO> questionaryDTOS = questionaryPage.getContent().stream().map(
         questionaryDTOFactory::create
     ).toList();

@@ -38,7 +38,7 @@ public class Questionary {
   @JoinColumn(name = "imageId")
   private Image banner;
 
-  @ManyToOne
+  @ManyToOne(cascade = CascadeType.ALL)
   @JoinColumn(name = "departmentId")
   private Department department;
 
