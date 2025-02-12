@@ -1,21 +1,22 @@
 package com.zodus.questionize.services;
 
+import com.zodus.questionize.dto.filters.StatisticsFilter;
 import com.zodus.questionize.dto.requests.questionary.submission.SubmitRequest;
-import com.zodus.questionize.models.Answer;
-import com.zodus.questionize.models.Member;
+import com.zodus.questionize.models.*;
 import com.zodus.questionize.models.questions.Question;
-import com.zodus.questionize.models.Questionary;
-import com.zodus.questionize.models.Submission;
 import com.zodus.questionize.repositories.SubmissionRepository;
+import jakarta.persistence.criteria.Predicate;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -72,7 +73,24 @@ public class SubmissionService {
     return new PageImpl<>(submissionPage.getContent(), pageable, size);
   }
 
-  public long countAllSubmittedBetween(LocalDateTime from, LocalDateTime to) {
-    return submissionRepository.countBySubmittedAtBetween(from, to);
+  public Specification<Submission> createSpecification(StatisticsFilter filter) {
+    return (root, query, cb) -> {
+      List<Predicate> predicates = new ArrayList<>();
+
+      if (filter.departmentId() != null) {
+        predicates.add(cb.equal(root.get("questionary").get("department").get("id"), filter.departmentId()));
+      }
+      if (filter.questionaryId() != null) {
+        predicates.add(cb.equal(root.get("questionary").get("id"), filter.questionaryId()));
+      }
+      if (filter.from() != null) {
+        predicates.add(cb.greaterThanOrEqualTo(root.get("submittedAt"), filter.from()));
+      }
+      if (filter.to() != null) {
+        predicates.add(cb.lessThanOrEqualTo(root.get("submittedAt"), filter.to()));
+      }
+
+      return cb.and(predicates.toArray(new Predicate[0]));
+    };
   }
 }
