@@ -1,19 +1,17 @@
 package com.zodus.questionize.services;
 
-import com.zodus.questionize.dto.GeneralStatisticsDTO;
-import com.zodus.questionize.dto.filters.GeneralStatisticsFilter;
-import com.zodus.questionize.models.questions.QuestionType;
+import com.zodus.questionize.dto.StatisticsDTO;
+import com.zodus.questionize.dto.filters.StatisticsFilter;
+import com.zodus.questionize.models.Submission;
 import com.zodus.questionize.models.questions.types.enums.Rating;
-import com.zodus.questionize.repositories.AnswerRepository;
-import com.zodus.questionize.repositories.QuestionaryRepository;
 import com.zodus.questionize.repositories.SubmissionRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Period;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 @Service
 @AllArgsConstructor
@@ -22,20 +20,19 @@ public class StatisticsService {
   private final SubmissionService submissionService;
   private final AnswerService answerService;
   private final SubmissionTokenService submissionTokenService;
+  private final SubmissionRepository submissionRepository;
 
-  public GeneralStatisticsDTO getGeneralStatistics(GeneralStatisticsFilter filter) {
-    Period period = filter.period();
-    LocalDate from = filter.from();
-    LocalDate to = filter.to();
-    LocalDate now = LocalDate.now();
+  public StatisticsDTO getStatistics(StatisticsFilter filter) {
+    LocalDateTime now = LocalDateTime.now();
 
-    long totalQuestionnairesActive = questionaryService.countAllBetween(now.atStartOfDay(), now.atStartOfDay());
-    long totalSubmissions = submissionService.countAllSubmittedBetween(from.atStartOfDay(), to.atStartOfDay());
-    Map<String, Long> statisticsPerPeriod = getStatisticsPerPeriod(period, from, to);
-    Map<Rating, Long> satisfactionDistribution = getSatisfactionDistribution();
+    Specification<Submission> specification = submissionService.createSpecification(filter);
+    long totalSubmissions = submissionRepository.count(specification);
+    long totalQuestionnairesActive = questionaryService.countAllBetween(now, now);
+    Map<String, Long> statisticsPerPeriod = getStatisticsPerPeriod(filter);
     long unfinishedSubmissions = submissionTokenService.countTotal();
+    Map<Rating, Long> satisfactionDistribution = getSatisfactionDistribution(filter);
 
-    return new GeneralStatisticsDTO(
+    return new StatisticsDTO(
         totalQuestionnairesActive,
         totalSubmissions,
         statisticsPerPeriod,
@@ -44,23 +41,29 @@ public class StatisticsService {
     );
   }
 
-  private Map<Rating, Long> getSatisfactionDistribution() {
-   return answerService.countAllRatingQuestions();
+  private Map<Rating, Long> getSatisfactionDistribution(StatisticsFilter filter) {
+   return answerService.countAllRatingQuestions(filter);
   }
 
-  private Map<String, Long> getStatisticsPerPeriod(Period period, LocalDate from, LocalDate to) {
+  private Map<String, Long> getStatisticsPerPeriod(StatisticsFilter filter) {
+    Period period = filter.period();
+    LocalDateTime from = filter.from();
+    LocalDateTime to = filter.to();
+
     int days = period.getDays();
     int months = period.getMonths();
     int years = period.getYears();
     Map<String, Long> response = new TreeMap<>();
 
-    LocalDate aux = from
+    LocalDateTime aux = from
         .plusDays(days)
         .plusMonths(months)
         .plusYears(years);
 
+    Specification<Submission> specification = submissionService.createSpecification(filter);
+
     while (aux.isBefore(to) || aux.isEqual(to)) {
-      long submissionsInPeriod = submissionService.countAllSubmittedBetween(from.atStartOfDay(), aux.atStartOfDay());
+      long submissionsInPeriod = submissionRepository.count(specification);
       response.put(from + " - " + aux, submissionsInPeriod);
 
       from = aux.plusDays(1);
@@ -68,8 +71,11 @@ public class StatisticsService {
           .plusDays(days)
           .plusMonths(months)
           .plusYears(years);
+
+      filter = new StatisticsFilter(filter.period(), from, to, filter.questionaryId(), filter.departmentId(), filter.onlyActive());
+      specification = submissionService.createSpecification(filter);
     }
-    long submissionsInPeriod = submissionService.countAllSubmittedBetween(from.atStartOfDay(), aux.atStartOfDay());
+    long submissionsInPeriod = submissionRepository.count(specification);
     response.put(from + " - " + aux, submissionsInPeriod);
 
     return response;
