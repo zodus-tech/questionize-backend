@@ -31,10 +31,7 @@ public class StatisticsService {
     long totalQuestionnairesActive = questionaryService.countAllBetween(now, now);
     Map<String, Long> statisticsPerPeriod = getStatisticsPerPeriod(filter);
     long unfinishedSubmissions = submissionTokenService.countTotal();
-
-
-    // TODO
-    Map<Rating, Long> satisfactionDistribution = getSatisfactionDistribution();
+    Map<Rating, Long> satisfactionDistribution = getSatisfactionDistribution(filter);
 
     return new StatisticsDTO(
         totalQuestionnairesActive,
@@ -45,8 +42,8 @@ public class StatisticsService {
     );
   }
 
-  private Map<Rating, Long> getSatisfactionDistribution() {
-   return answerService.countAllRatingQuestions();
+  private Map<Rating, Long> getSatisfactionDistribution(StatisticsFilter filter) {
+   return answerService.countAllRatingQuestions(filter);
   }
 
   private Map<String, Long> getStatisticsPerPeriod(StatisticsFilter filter) {
