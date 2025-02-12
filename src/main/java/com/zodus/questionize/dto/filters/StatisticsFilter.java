@@ -9,6 +9,7 @@ public record StatisticsFilter(
     LocalDateTime from,
     LocalDateTime to,
     UUID questionaryId,
-    UUID departmentId
+    UUID departmentId,
+    Boolean onlyActive
 ) {
 }

@@ -72,7 +72,7 @@ public class StatisticsService {
           .plusMonths(months)
           .plusYears(years);
 
-      filter = new StatisticsFilter(filter.period(), from, to, filter.questionaryId(), filter.departmentId());
+      filter = new StatisticsFilter(filter.period(), from, to, filter.questionaryId(), filter.departmentId(), filter.onlyActive());
       specification = submissionService.createSpecification(filter);
     }
     long submissionsInPeriod = submissionRepository.count(specification);
