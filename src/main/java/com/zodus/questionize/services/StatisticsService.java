@@ -47,8 +47,17 @@ public class StatisticsService {
 
   private Map<String, Long> getStatisticsPerPeriod(StatisticsFilter filter) {
     Period period = filter.period();
+    if (filter.period() == null) {
+      period = Period.of(0, 1, 0);
+    }
     LocalDateTime from = filter.from();
+    if (filter.from() == null) {
+      from = LocalDateTime.now().minusMonths(2);
+    }
     LocalDateTime to = filter.to();
+    if (filter.to() == null) {
+      to = LocalDateTime.now().plusMonths(2);
+    }
 
     int days = period.getDays();
     int months = period.getMonths();
