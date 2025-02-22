@@ -75,8 +75,10 @@ public class QuestionaryService {
     questionaryRepository.deleteById(id);
   }
 
-  public long countAllBetween(LocalDateTime from, LocalDateTime to) {
-    return questionaryRepository.countByStartDateBeforeAndEndDateAfter(from, to);
+  public long countAllBetween(LocalDateTime from, LocalDateTime to, UUID departmentId) {
+    return departmentId == null ?
+        questionaryRepository.countByStartDateBeforeAndEndDateAfter(from, to) :
+        questionaryRepository.countByStartDateBeforeAndEndDateAfterAndDepartmentId(from, to, departmentId);
   }
 
   public void saveQuestionary(Questionary questionary) {

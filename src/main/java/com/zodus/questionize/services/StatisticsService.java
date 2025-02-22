@@ -27,7 +27,7 @@ public class StatisticsService {
 
     Specification<Submission> specification = submissionService.createSpecification(filter);
     long totalSubmissions = submissionRepository.count(specification);
-    long totalQuestionnairesActive = questionaryService.countAllBetween(now, now);
+    long totalQuestionnairesActive = questionaryService.countAllBetween(now, now, filter.departmentId());
     Map<String, Long> statisticsPerPeriod = getStatisticsPerPeriod(filter);
     long unfinishedSubmissions = submissionTokenService.countTotal();
     Map<Rating, Long> satisfactionDistribution = getSatisfactionDistribution(filter);

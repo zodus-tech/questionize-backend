@@ -12,4 +12,5 @@ import java.util.UUID;
 public interface QuestionaryRepository extends JpaRepository<Questionary, UUID>, JpaSpecificationExecutor<Questionary> {
 
   long countByStartDateBeforeAndEndDateAfter(LocalDateTime startDateAfter, LocalDateTime endDateBefore);
+  long countByStartDateBeforeAndEndDateAfterAndDepartmentId(LocalDateTime startDateAfter, LocalDateTime endDateBefore, UUID departmentId);
 }
