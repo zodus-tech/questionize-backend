@@ -2,6 +2,7 @@ package com.zodus.questionize.controllers;
 
 import com.zodus.questionize.dto.SubmissionDTO;
 import com.zodus.questionize.dto.factories.SubmissionDTOFactory;
+import com.zodus.questionize.dto.filters.SubmissionsFilter;
 import com.zodus.questionize.dto.requests.questionary.submission.SubmitRequest;
 import com.zodus.questionize.models.Submission;
 import com.zodus.questionize.services.SubmissionService;
@@ -31,8 +32,8 @@ public class SubmissionsController {
   }
 
   @GetMapping("/submissions")
-  public ResponseEntity<PagedModel<SubmissionDTO>> getSubmissions(@PathVariable UUID questionaryId, Pageable pageable) {
-    Page<Submission> submissionsPage = submissionService.getSubmissions(questionaryId, pageable);
+  public ResponseEntity<PagedModel<SubmissionDTO>> getSubmissions(@PathVariable UUID questionaryId, Pageable pageable, SubmissionsFilter filter) {
+    Page<Submission> submissionsPage = submissionService.getSubmissions(questionaryId, pageable, filter);
     PagedModel<SubmissionDTO> response = submissionDTOFactory.create(submissionsPage, pageable);
 
     return new ResponseEntity<>(response, HttpStatus.OK);

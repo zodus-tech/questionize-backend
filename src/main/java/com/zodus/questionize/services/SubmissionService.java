@@ -1,6 +1,7 @@
 package com.zodus.questionize.services;
 
 import com.zodus.questionize.dto.filters.StatisticsFilter;
+import com.zodus.questionize.dto.filters.SubmissionsFilter;
 import com.zodus.questionize.dto.requests.questionary.submission.SubmitRequest;
 import com.zodus.questionize.models.*;
 import com.zodus.questionize.models.questions.Question;
@@ -66,9 +67,10 @@ public class SubmissionService {
     return submissionRepository.findByIdAndQuestionaryId(id, questionaryId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
   }
 
-  public Page<Submission> getSubmissions(UUID questionaryId, Pageable pageable) {
-    Page<Submission> submissionPage = submissionRepository.findAllByQuestionaryId(pageable, questionaryId);
-    long size = submissionRepository.findAllByQuestionaryId(null, questionaryId).getTotalElements();
+  public Page<Submission> getSubmissions(UUID questionaryId, Pageable pageable, SubmissionsFilter filter) {
+    Specification<Submission> specification = createSpecification(filter, questionaryId);
+    Page<Submission> submissionPage = submissionRepository.findAll(specification, pageable);
+    long size = submissionRepository.count(specification);
 
     return new PageImpl<>(submissionPage.getContent(), pageable, size);
   }
@@ -92,6 +94,27 @@ public class SubmissionService {
       if (filter.onlyActive() != null && filter.onlyActive()) {
         predicates.add(cb.greaterThanOrEqualTo(root.get("questionary").get("startDate"), cb.currentTimestamp()));
         predicates.add(cb.lessThanOrEqualTo(root.get("questionary").get("endDate"), cb.currentTimestamp()));
+      }
+
+      return cb.and(predicates.toArray(new Predicate[0]));
+    };
+  }
+
+  public Specification<Submission> createSpecification(SubmissionsFilter filter, UUID questionaryId) {
+    return (root, query, cb) -> {
+      List<Predicate> predicates = new ArrayList<>();
+
+      if (filter.memberId() != null) {
+        predicates.add(cb.equal(root.get("member").get("id"), filter.memberId()));
+      }
+      if (filter.from() != null) {
+        predicates.add(cb.greaterThanOrEqualTo(root.get("submittedAt"), filter.from()));
+      }
+      if (filter.to() != null) {
+        predicates.add(cb.lessThanOrEqualTo(root.get("submittedAt"), filter.to()));
+      }
+      if (questionaryId != null) {
+        predicates.add(cb.equal(root.get("questionary").get("id"), questionaryId));
       }
 
       return cb.and(predicates.toArray(new Predicate[0]));
