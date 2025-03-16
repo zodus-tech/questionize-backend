@@ -8,7 +8,14 @@ public class MultipleChoicheQuestionValidator implements QuestionValidator {
   @Override
   public boolean validate(Question question, Answer answer) {
     MultipleChoiceQuestion multipleChoiceQuestion = (MultipleChoiceQuestion) question;
+    String answerToString = answer.getAnswer();
+    String[] answersToArray = answerToString.split(", ");
 
-    return multipleChoiceQuestion.getOptions().contains(answer.getAnswer());
+    for (String a : answersToArray) {
+      if (!multipleChoiceQuestion.getOptions().contains(a))
+        return false;
+    }
+
+    return true;
   }
 }
