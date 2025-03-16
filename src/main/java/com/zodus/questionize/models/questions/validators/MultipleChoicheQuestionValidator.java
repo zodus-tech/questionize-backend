@@ -9,7 +9,7 @@ public class MultipleChoicheQuestionValidator implements QuestionValidator {
   public boolean validate(Question question, Answer answer) {
     MultipleChoiceQuestion multipleChoiceQuestion = (MultipleChoiceQuestion) question;
     String answerToString = answer.getAnswer();
-    String[] answersToArray = answerToString.split(", ");
+    String[] answersToArray = answerToString.split(" :z:o:d:u:s: ");
 
     for (String a : answersToArray) {
       if (!multipleChoiceQuestion.getOptions().contains(a))
