@@ -92,8 +92,7 @@ public class SubmissionService {
         predicates.add(cb.lessThanOrEqualTo(root.get("submittedAt"), filter.to()));
       }
       if (filter.onlyActive() != null && filter.onlyActive()) {
-        predicates.add(cb.greaterThanOrEqualTo(root.get("questionary").get("startDate"), cb.currentTimestamp()));
-        predicates.add(cb.lessThanOrEqualTo(root.get("questionary").get("endDate"), cb.currentTimestamp()));
+        predicates.add(cb.between(cb.currentTimestamp(), root.get("questionary").get("startDate"), root.get("questionary").get("endDate")));
       }
 
       return cb.and(predicates.toArray(new Predicate[0]));

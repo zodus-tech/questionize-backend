@@ -69,6 +69,8 @@ public class StatisticsService {
         .plusMonths(months)
         .plusYears(years);
 
+
+    filter = new StatisticsFilter(filter.period(), from, from.plusMonths(1), filter.questionaryId(), filter.departmentId(), filter.onlyActive());
     Specification<Submission> specification = submissionService.createSpecification(filter);
 
     while (aux.isBefore(to) || aux.isEqual(to)) {
@@ -81,7 +83,7 @@ public class StatisticsService {
           .plusMonths(months)
           .plusYears(years);
 
-      filter = new StatisticsFilter(filter.period(), from, to, filter.questionaryId(), filter.departmentId(), filter.onlyActive());
+      filter = new StatisticsFilter(filter.period(), from, from.plusMonths(1), filter.questionaryId(), filter.departmentId(), filter.onlyActive());
       specification = submissionService.createSpecification(filter);
     }
     long submissionsInPeriod = submissionRepository.count(specification);
