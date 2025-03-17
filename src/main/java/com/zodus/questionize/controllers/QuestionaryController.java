@@ -44,6 +44,14 @@ public class QuestionaryController {
     return new ResponseEntity<>(response, HttpStatus.OK);
   }
 
+  @PatchMapping("/rename/{id}")
+  public ResponseEntity<QuestionaryDTO> renameQuestionary(@PathVariable UUID id, @RequestBody String name) {
+    Questionary questionary = questionaryService.renameQuestionary(id, name);
+
+    QuestionaryDTO response = questionaryDTOFactory.create(questionary);
+    return new ResponseEntity<>(response, HttpStatus.OK);
+  }
+
   @GetMapping("/admin/{id}")
   public ResponseEntity<QuestionaryDTO> getQuestionaryByIdAsAdmin(@PathVariable UUID id) {
     Questionary questionary = questionaryService.getQuestionaryById(id);

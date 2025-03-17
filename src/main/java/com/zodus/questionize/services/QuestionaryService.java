@@ -102,4 +102,10 @@ public class QuestionaryService {
       return cb.and(predicates.toArray(new Predicate[0]));
     };
   }
+
+  public Questionary renameQuestionary(UUID id, String name) throws ResponseStatusException {
+    Questionary questionary = questionaryRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    questionary.setTitle(name);
+    return questionaryRepository.save(questionary);
+  }
 }
