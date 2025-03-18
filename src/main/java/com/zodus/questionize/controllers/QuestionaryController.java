@@ -4,6 +4,7 @@ import com.zodus.questionize.dto.QuestionaryDTO;
 import com.zodus.questionize.dto.factories.QuestionaryDTOFactory;
 import com.zodus.questionize.dto.filters.QuestionnairesFilter;
 import com.zodus.questionize.dto.requests.questionary.createQuestionary.CreateQuestionaryRequest;
+import com.zodus.questionize.dto.requests.updateQuestionary.UpdateQuestionaryRequest;
 import com.zodus.questionize.models.Questionary;
 import com.zodus.questionize.services.QuestionaryService;
 import com.zodus.questionize.services.SubmissionTokenService;
@@ -44,9 +45,9 @@ public class QuestionaryController {
     return new ResponseEntity<>(response, HttpStatus.OK);
   }
 
-  @PatchMapping("/rename/{id}")
-  public ResponseEntity<QuestionaryDTO> renameQuestionary(@PathVariable UUID id, @RequestBody String name) {
-    Questionary questionary = questionaryService.renameQuestionary(id, name);
+  @PatchMapping("/update/{id}")
+  public ResponseEntity<QuestionaryDTO> updateQuestionary(@PathVariable UUID id, @RequestBody UpdateQuestionaryRequest request) {
+    Questionary questionary = questionaryService.updateQuestionary(id, request);
 
     QuestionaryDTO response = questionaryDTOFactory.create(questionary);
     return new ResponseEntity<>(response, HttpStatus.OK);

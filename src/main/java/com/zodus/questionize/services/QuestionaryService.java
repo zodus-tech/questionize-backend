@@ -2,6 +2,7 @@ package com.zodus.questionize.services;
 
 import com.zodus.questionize.dto.filters.QuestionnairesFilter;
 import com.zodus.questionize.dto.requests.questionary.createQuestionary.CreateQuestionaryRequest;
+import com.zodus.questionize.dto.requests.updateQuestionary.UpdateQuestionaryRequest;
 import com.zodus.questionize.models.Department;
 import com.zodus.questionize.models.Member;
 import com.zodus.questionize.models.questions.Question;
@@ -103,9 +104,17 @@ public class QuestionaryService {
     };
   }
 
-  public Questionary renameQuestionary(UUID id, String name) throws ResponseStatusException {
+  public Questionary updateQuestionary(UUID id, UpdateQuestionaryRequest request) throws ResponseStatusException {
     Questionary questionary = questionaryRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-    questionary.setTitle(name);
+    if (request.title().isPresent()) {
+      questionary.setTitle(request.title().get());
+    }
+    if (request.startDate().isPresent()) {
+      questionary.setStartDate(request.startDate().get());
+    }
+    if (request.endDate().isPresent()) {
+      questionary.setEndDate(request.endDate().get());
+    }
     return questionaryRepository.save(questionary);
   }
 }
