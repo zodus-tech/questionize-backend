@@ -3,9 +3,9 @@ spring:
     init:
       mode: always
   datasource:
-    url: jdbc:mysql://localhost/questionize-db?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=America/Sao_Paulo
-    username: root
-    password:
+    url: ${SPRING_DATASOURCE_URL:jdbc:mysql://localhost/questionize-db?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=America/Sao_Paulo}
+    username: ${SPRING_DATASOURCE_USERNAME:root}
+    password: ${SPRING_DATASOURCE_PASSWORD:}
   jpa:
     defer-datasource-initialization: true
     database: mysql
