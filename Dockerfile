@@ -12,8 +12,7 @@ VOLUME /tmp
 
 # Copy the packaged jar file into the container
 # This uses an argument to generalize the jar file name
-ARG JAR_FILE=target/*.jar
-COPY ${JAR_FILE} app.jar
+COPY target/questionize-0.0.1-SNAPSHOT.jar app.jar
 
 # Expose the port your application runs on (default Spring Boot port)
 EXPOSE 8080
