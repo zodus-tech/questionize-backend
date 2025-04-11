@@ -19,7 +19,11 @@ spring:
   jackson:
     serialization:
       write_dates_as_timestamps: false
+  config:
+    import: optional:file:.env[.properties]
 jwt:
   secret: ${JWT_SECRET:mysecretkey}
   expiration-time-in-hours: 10
   expiration-time-in-days: 7
+cors:
+  allowed-origins: ${ALLOWED_ORIGINS:/**}
